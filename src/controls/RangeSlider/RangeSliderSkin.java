@@ -1,13 +1,11 @@
 package controls.RangeSlider;
 
-import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.geometry.VPos;
 import javafx.scene.control.SkinBase;
-import javafx.scene.input.DragEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.CycleMethod;
@@ -16,14 +14,22 @@ import javafx.scene.paint.Stop;
 import javafx.scene.shape.Rectangle;
 
 public class RangeSliderSkin extends SkinBase<RangeSlider> {
-	private static final double barHeight = 10;
 
-	private RangeSlider rangeSlider;
+	// Component layout parameters
+	private static final double barHeight = 10;
 	private static final double horizontalPadding = 5;
 	private static final double verticalPadding = 5;
+
+	// Main Component
+	private RangeSlider rangeSlider;
+
+	// Graphic Items
 	private Rectangle bar;
-	private Rectangle minCursor;
-	private boolean drag = false;
+	private Cursor minCursor;
+
+	// Cursor moves
+	private double cursorDragOrigin;
+	private double cursorOriginLayout;
 
 	protected RangeSliderSkin(RangeSlider rangeSlider) {
 		super(rangeSlider);
@@ -50,20 +56,23 @@ public class RangeSliderSkin extends SkinBase<RangeSlider> {
 
 		bar.setOnMousePressed(new EventHandler<MouseEvent>() {
 			public void handle(MouseEvent event) {
-				updateCursor(event);
+				// event.getX() = coordinate in the bar coordinate system
+				updateCursor(event.getX());
 			}
 		});
 
 		bar.setOnMouseDragged(new EventHandler<MouseEvent>() {
 			public void handle(MouseEvent event) {
-				updateCursor(event);
+				// event.getX() = coordinate in the bar coordinate system
+				updateCursor(event.getX());
 			}
 		});
 
 		bar.widthProperty().addListener(new ChangeListener<Number>() {
+			// If the bar width changes, cursors positions are adjusted
 			@Override
 			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-				minCursor.setX(cursorXPos(rangeSlider.getValue1()));
+				minCursor.setLayoutX(cursorXPos(rangeSlider.getValue1()));
 			}
 		});
 		getChildren().add(bar);
@@ -72,27 +81,46 @@ public class RangeSliderSkin extends SkinBase<RangeSlider> {
 	private void initMinCursor() {
 		minCursor = new Cursor();
 		getChildren().add(minCursor);
-		minCursor.setX(cursorXPos(rangeSlider.getValue1()));
-		minCursor.setY(cursorYPos());
-		
+		minCursor.setLayoutX(cursorXPos(rangeSlider.getValue1()));
+		minCursor.setLayoutY(cursorYPos());
+
+		minCursor.setOnMousePressed(new EventHandler<MouseEvent>() {
+			public void handle(MouseEvent event) {
+				// when the cursor is dragged, event.getX() is given in the cursor coordinate
+				// system, that we need to adjust in the same time, so we need to use absolutes
+				// coordinates (a.k.a event.getSceneX()) to make diff with the original position
+				// on drag.
+				System.out.println("Cursor Pressed : " + event.getSceneX());
+				cursorDragOrigin = event.getSceneX();
+				cursorOriginLayout = minCursor.getLayoutX();
+			}
+		});
+
 		minCursor.setOnMouseDragged(new EventHandler<MouseEvent>() {
 			public void handle(MouseEvent event) {
-				updateCursor(event);
+				// Diff with the drag origin coordinate
+				updateCursor(cursorOriginLayout + event.getSceneX() - cursorDragOrigin);
 			}
 		});
 	}
 
-	private void updateCursor(MouseEvent event) {
+	private void updateCursor(Double newPos) {
+		// Compute the range slider value according to newPos, that represents the
+		// cursor X coordinate in the bar coordinate system.
 		double value = rangeSlider.getMinValue()
-				+ event.getX() * (rangeSlider.getMaxValue() - rangeSlider.getMinValue()) / bar.getWidth();
+				+ newPos * (rangeSlider.getMaxValue() - rangeSlider.getMinValue()) / bar.getWidth();
 		if (value >= rangeSlider.getMinValue() && value <= rangeSlider.getMaxValue()) {
 			rangeSlider.setValue1(value);
-			minCursor.setX(cursorXPos(rangeSlider.getValue1()));
+		} else if (value < rangeSlider.getMinValue()) {
+			rangeSlider.setValue1(rangeSlider.getMinValue());
+		} else if (value > rangeSlider.getMinValue()) {
+			rangeSlider.setValue1(rangeSlider.getMaxValue());
 		}
+		minCursor.setLayoutX(cursorXPos(rangeSlider.getValue1()));
 	}
 
 	private double cursorXPos(double value) {
-		System.out.println(bar.getWidth());
+		// Compute the absolute cursor coordinate according to the rangeSlider value.
 		return bar.getX() + (value - rangeSlider.getMinValue()) * bar.getWidth()
 				/ (rangeSlider.getMaxValue() - rangeSlider.getMinValue()) - Cursor.cursorSize / 2;
 	}
@@ -108,10 +136,12 @@ public class RangeSliderSkin extends SkinBase<RangeSlider> {
 		layoutInArea(bar, horizontalPadding + Cursor.cursorSize / 2, verticalPadding, bar.getWidth(),
 				barHeight + 2 * verticalPadding, 0, HPos.CENTER, VPos.TOP);
 
-		System.out.println(rangeSlider.getValue1());
+//		System.out.println("Value : " + rangeSlider.getValue1());
+//		System.out.println("LayoutX : " + minCursor.getLayoutX());
+//		System.out.println("LayoutY : " + minCursor.getLayoutY());
 
-		layoutInArea(minCursor, minCursor.getX() + horizontalPadding + Cursor.cursorSize / 2,
-				minCursor.getY() + verticalPadding, Cursor.cursorSize, Cursor.cursorSize, 0, HPos.CENTER, VPos.TOP);
+		layoutInArea(minCursor, minCursor.getLayoutX() + horizontalPadding + Cursor.cursorSize / 2,
+				cursorYPos() + verticalPadding, Cursor.cursorSize, Cursor.cursorSize, 0, HPos.CENTER, VPos.TOP);
 	}
 
 }
