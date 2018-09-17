@@ -39,18 +39,6 @@ public class Cursor extends Polygon {
 			};
 			break;
 		case MIDDLE:
-//			points = new Double[] {
-//					0.0, 0.0,
-//				    cursorSize / 2, (cursorSize - RangeSliderSkin.barHeight) / 2,
-//				    cursorSize , 0.0,
-//				    0.0, 0.0,
-//				    cursorSize / 2, (cursorSize - RangeSliderSkin.barHeight) / 2,
-//				    cursorSize / 2, cursorSize - (cursorSize - RangeSliderSkin.barHeight) / 2,
-//				    0.0, cursorSize,
-//				    cursorSize, cursorSize,
-//				    cursorSize / 2, cursorSize - (cursorSize - RangeSliderSkin.barHeight) / 2,
-//				    cursorSize / 2, (cursorSize - RangeSliderSkin.barHeight) / 2,
-//			};
 			points = new Double[] {
 			0.0, 0.0,
 		    cursorSize / 2, cursorSize / 2,
@@ -101,9 +89,23 @@ public class Cursor extends Polygon {
 				* (rangeSlider.getMaxValue() - rangeSlider.getMinValue()) / barWidth;
 
 		if (value < rangeSlider.getMinValue()) {
-			value = rangeSlider.getMinValue();
+			switch(rangeSlider.getMode()) {
+			case LINEAR:
+				value = rangeSlider.getMinValue();
+				break;
+			case CYCLIC:
+				value = rangeSlider.getMaxValue();
+				rangeSlider. getRangeSliderSkin().setReinitializeDrag(true);
+			}
 		} else if (value > rangeSlider.getMaxValue()) {
-			value = rangeSlider.getMaxValue();
+			switch(rangeSlider.getMode()) {
+			case LINEAR:
+				value = rangeSlider.getMaxValue();
+				break;
+			case CYCLIC:
+				value = rangeSlider.getMinValue();
+				rangeSlider. getRangeSliderSkin().setReinitializeDrag(true);
+			}
 		}
 
 		switch (getCursorType()) {

@@ -8,9 +8,13 @@ import javafx.scene.control.Skin;
 
 public class RangeSlider extends Control {
 
+	private RangeSliderSkin rangeSliderSkin;
+
 	public static enum Mode {
 		LINEAR, CYCLIC
 	}
+
+	private Mode mode = Mode.LINEAR;
 
 	private double minValue;
 	private double maxValue;
@@ -19,6 +23,11 @@ public class RangeSlider extends Control {
 	private SimpleDoubleProperty value2;
 
 	private boolean listenValueChanges = true;
+
+	public RangeSlider(double minValue, double maxValue, double value1, double value2, Mode mode) {
+		this(minValue, maxValue, value1, value2);
+		this.mode = mode;
+	}
 
 	public RangeSlider(double minValue, double maxValue, double value1, double value2) {
 		super();
@@ -29,7 +38,14 @@ public class RangeSlider extends Control {
 			@Override
 			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
 				if (listenValueChanges) {
-					valueMid.set((getValue2() + (double) newValue) / 2);
+//					if ((double) newValue <= getValue2()) {
+//						System.out.println("Normal : " + ((getValue2() + (double) newValue) / 2));
+//						valueMid.set((getValue2() + (double) newValue) / 2);
+//					} else {
+//						System.out.println("Inverted : " + ((- maxValue + (double) newValue + getValue2()) / 2));
+//						valueMid.set((- maxValue + (double) newValue + getValue2()) / 2);
+//					}
+					computeMidValue((double) newValue, getValue2());
 				}
 			}
 		});
@@ -38,24 +54,35 @@ public class RangeSlider extends Control {
 			@Override
 			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
 				if (listenValueChanges) {
-					valueMid.set(((double) newValue + getValue1()) / 2);
+//					if (getValue1() <= (double) newValue) {
+//						System.out.println("Normal : " + (((double) newValue + getValue1()) / 2));
+//						valueMid.set(((double) newValue + getValue1()) / 2);
+//					} else {
+//						System.out.println("Inverted : " + ((- maxValue + getValue1() + (double) newValue) / 2));
+//						valueMid.set((- maxValue + getValue1() + (double) newValue) / 2);
+//					}
+					computeMidValue(getValue1(), (double) newValue);
 				}
 			}
 		});
 		valueMid = new SimpleDoubleProperty((value2 + value1) / 2);
-//		this.valueMid.addListener(new ChangeListener<Number>() {
-//			@Override
-//			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-//				setListenValueChanges(false);
-//				double delta = (double) newValue - (double) oldValue;
-//				setValue1(Math.max(getMinValue(), getValue1() + delta));
-//				setValue2(Math.min(getMaxValue(), getValue2() + delta));
-//				setListenValueChanges(true);
-//			}
-//		});
 
 	}
 
+	public void computeMidValue(double v1, double v2) {
+		if (v1 <= v2) {
+			System.out.println("Normal : " + ((v2 + v1) / 2));
+			valueMid.set((v2 + v1) / 2);
+		} else {
+			double midValue = (v1 - (maxValue - minValue) + v2) / 2;
+			if (midValue >= minValue && midValue <= maxValue) {
+				valueMid.set(midValue);
+			}
+			else {
+				valueMid.set(midValue + maxValue - minValue);
+			}
+		}
+	}
 	public void setMinValue(double minValue) {
 		this.minValue = minValue;
 	}
@@ -108,12 +135,25 @@ public class RangeSlider extends Control {
 		return valueMid.get();
 	}
 
+	public void setMode(Mode mode) {
+		this.mode = mode;
+	}
+
+	public Mode getMode() {
+		return mode;
+	}
+
 	public void setListenValueChanges(boolean listenValueChanges) {
 		this.listenValueChanges = listenValueChanges;
 	}
 
 	@Override
 	protected Skin<?> createDefaultSkin() {
-		return new RangeSliderSkin(this);
+		rangeSliderSkin = new RangeSliderSkin(this);
+		return rangeSliderSkin;
+	}
+
+	public RangeSliderSkin getRangeSliderSkin() {
+		return rangeSliderSkin;
 	}
 }

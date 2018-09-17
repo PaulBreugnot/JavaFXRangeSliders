@@ -31,11 +31,24 @@ public class RangeSliderSkin extends SkinBase<RangeSlider> {
 
 	// Cursor moves
 	private double cursorDragOrigin;
+	private boolean reinitializeDrag;
 
 	protected RangeSliderSkin(RangeSlider rangeSlider) {
 		super(rangeSlider);
 		this.rangeSlider = rangeSlider;
 		initGraphics();
+	}
+
+	public double getCursorDragOrigin() {
+		return cursorDragOrigin;
+	}
+
+	public void setCursorDragOrigin(double cursorDragOrigin) {
+		this.cursorDragOrigin = cursorDragOrigin;
+	}
+	
+	public void setReinitializeDrag(boolean reinitializeDrag) {
+		this.reinitializeDrag = reinitializeDrag;
 	}
 
 	private void initGraphics() {
@@ -127,6 +140,7 @@ public class RangeSliderSkin extends SkinBase<RangeSlider> {
 		rangeSlider.valueMidProperty().addListener(new ChangeListener<Number>() {
 			@Override
 			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+				System.out.println("Value mid : " + (double) newValue);
 				updateCursorXPos(midCursor, (double) newValue);
 			}
 		});
@@ -135,21 +149,16 @@ public class RangeSliderSkin extends SkinBase<RangeSlider> {
 	private void initCursorListeners(Cursor cursor) {
 		cursor.setOnMousePressed(new EventHandler<MouseEvent>() {
 			public void handle(MouseEvent event) {
-				// when the cursor is dragged, event.getX() is given in the cursor coordinate
-				// system, that we need to adjust in the same time, so we need to use absolutes
-				// coordinates (a.k.a event.getSceneX()) to make diff with the original position
-				// on drag.
-				cursorDragOrigin = event.getSceneX();
-				cursor.setDragOriginLayout(cursor.getLayoutX());
-				if (cursor.getCursorType() == Cursor.CursorType.MIDDLE) {
-					minCursor.setDragOriginLayout(minCursor.getLayoutX());
-					maxCursor.setDragOriginLayout(maxCursor.getLayoutX());
-				}
+				initDrag(cursor, event);
 			}
 		});
 
 		cursor.setOnMouseDragged(new EventHandler<MouseEvent>() {
 			public void handle(MouseEvent event) {
+				if (reinitializeDrag) {
+					initDrag(cursor, event);
+					reinitializeDrag = false;
+				}
 				// Diff with the drag origin coordinate
 				cursor.updateValue(cursor.getDragOriginLayout() + event.getSceneX() - cursorDragOrigin, bar.getWidth());
 				if (cursor.getCursorType() == Cursor.CursorType.MIDDLE) {
@@ -161,6 +170,19 @@ public class RangeSliderSkin extends SkinBase<RangeSlider> {
 				}
 			}
 		});
+	}
+	
+	private void initDrag(Cursor cursor, MouseEvent event) {
+		// when the cursor is dragged, event.getX() is given in the cursor coordinate
+		// system, that we need to adjust in the same time, so we need to use absolutes
+		// coordinates (a.k.a event.getSceneX()) to make diff with the original position
+		// on drag.
+		cursorDragOrigin = event.getSceneX();
+		cursor.setDragOriginLayout(cursor.getLayoutX());
+		if (cursor.getCursorType() == Cursor.CursorType.MIDDLE) {
+			minCursor.setDragOriginLayout(minCursor.getLayoutX());
+			maxCursor.setDragOriginLayout(maxCursor.getLayoutX());
+		}
 	}
 
 	private void updateCursorXPos(Cursor cursor, double value) {
