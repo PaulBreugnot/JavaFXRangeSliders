@@ -16,18 +16,18 @@ import javafx.scene.shape.Rectangle;
 public class RangeSliderSkin extends SkinBase<RangeSlider> {
 
 	// Component layout parameters
-	public static final double barHeight = 10;
 	public static final double horizontalPadding = 5;
-	private static final double verticalPadding = 5;
+	public static final double verticalPadding = 5;
 
 	// Main Component
 	private RangeSlider rangeSlider;
 
 	// Graphic Items
-	private Rectangle bar;
+	// private Rectangle bar;
 	private Cursor minCursor;
 	private Cursor maxCursor;
 	private Cursor midCursor;
+	private Bar bar;
 
 	// Cursor moves
 	private double cursorDragOrigin;
@@ -37,6 +37,18 @@ public class RangeSliderSkin extends SkinBase<RangeSlider> {
 		super(rangeSlider);
 		this.rangeSlider = rangeSlider;
 		initGraphics();
+	}
+	
+	public Cursor getMinCursor() {
+		return minCursor;
+	}
+	
+	public Cursor getMidCursor() {
+		return midCursor;
+	}
+	
+	public Cursor getMaxCursor() {
+		return maxCursor;
 	}
 
 	public double getCursorDragOrigin() {
@@ -59,16 +71,12 @@ public class RangeSliderSkin extends SkinBase<RangeSlider> {
 	}
 
 	private void initBar() {
-		bar = new Rectangle();
-		bar.setHeight(barHeight);
+		bar = new Bar(rangeSlider);
 		Stop[] stops = new Stop[360];
 		for (int i = 0; i < 360; i++) {
 			stops[i] = new Stop(i / 360., Color.hsb(i, 1, 1));
 		}
-		LinearGradient color = new LinearGradient(0, 0, 1, 0, true, CycleMethod.NO_CYCLE, stops);
-		bar.setFill(color);
-		bar.setStroke(Color.BLACK);
-		bar.setStrokeWidth(1);
+		//LinearGradient color = new LinearGradient(0, 0, 1, 0, true, CycleMethod.NO_CYCLE, stops);
 
 //		bar.setOnMousePressed(new EventHandler<MouseEvent>() {
 //			public void handle(MouseEvent event) {
@@ -94,7 +102,9 @@ public class RangeSliderSkin extends SkinBase<RangeSlider> {
 			}
 		});
 
-		getChildren().add(bar);
+		getChildren().add(bar.getBar1());
+		getChildren().add(bar.getBarMid());
+		getChildren().add(bar.getBar2());
 
 	}
 
@@ -195,29 +205,36 @@ public class RangeSliderSkin extends SkinBase<RangeSlider> {
 	}
 
 	private double cursorYPos() {
-		return bar.getY() + (barHeight - Cursor.cursorSize) / 2;
+		// return bar.getY() + (Bar.barHeight - Cursor.cursorSize) / 2;
+		return bar.getY() + (Bar.barHeight - Cursor.cursorSize) / 2 - 1;
+		// return bar.getY();
 	}
 
 	@Override
 	protected void layoutChildren(double contentX, double contentY, double contentWidth, double contentHeight) {
 
 		bar.setWidth(contentWidth - 2 * horizontalPadding - 2 * Cursor.cursorSize);
-		layoutInArea(bar, horizontalPadding + Cursor.cursorSize, verticalPadding, bar.getWidth(),
-				barHeight + 2 * verticalPadding, 0, HPos.CENTER, VPos.TOP);
+		System.out.println("bar1 layout x : " + bar.getBar1().getLayoutX());
+		layoutInArea(bar.getBar1(), bar.getBar1().getLayoutX(), verticalPadding + Bar.barHeight, bar.getBar1().getWidth(),
+				Bar.barHeight + 2 * verticalPadding, 0, HPos.LEFT, VPos.TOP);
+		layoutInArea(bar.getBarMid(), bar.getBarMid().getLayoutX(), verticalPadding + Bar.barHeight, bar.getBarMid().getWidth(),
+				Bar.barHeight + 2 * verticalPadding, 0, HPos.LEFT, VPos.TOP);
+		layoutInArea(bar.getBar2(), bar.getBar2().getLayoutX(), verticalPadding + Bar.barHeight, bar.getBar2().getWidth(),
+				Bar.barHeight + 2 * verticalPadding, 0, HPos.LEFT, VPos.TOP);
 
 //		System.out.println("Value 1 : " + rangeSlider.getValue1());
 //		System.out.println("Value 2 : " + rangeSlider.getValue2());
 //		System.out.println("LayoutX : " + maxCursor.getLayoutX());
 //		System.out.println("LayoutY : " + minCursor.getLayoutY());
 
-		layoutInArea(minCursor, minCursor.getLayoutX(), cursorYPos() + verticalPadding, Cursor.cursorSize,
-				Cursor.cursorSize, 0, HPos.CENTER, VPos.TOP);
+		layoutInArea(minCursor, minCursor.getLayoutX(), cursorYPos(), Cursor.cursorSize,
+				Cursor.cursorSize, 0, HPos.LEFT, VPos.TOP);
 
-		layoutInArea(maxCursor, maxCursor.getLayoutX(), cursorYPos() + verticalPadding, Cursor.cursorSize,
-				Cursor.cursorSize, 0, HPos.CENTER, VPos.TOP);
+		layoutInArea(maxCursor, maxCursor.getLayoutX(), cursorYPos(), Cursor.cursorSize,
+				Cursor.cursorSize, 0, HPos.LEFT, VPos.TOP);
 
-		layoutInArea(midCursor, midCursor.getLayoutX(), cursorYPos() + verticalPadding, Cursor.cursorSize,
-				Cursor.cursorSize, 0, HPos.CENTER, VPos.TOP);
+		layoutInArea(midCursor, midCursor.getLayoutX(), cursorYPos(), Cursor.cursorSize,
+				Cursor.cursorSize, 0, HPos.LEFT, VPos.TOP);
 	}
 
 }

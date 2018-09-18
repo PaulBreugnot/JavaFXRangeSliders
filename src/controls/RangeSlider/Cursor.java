@@ -7,7 +7,7 @@ public class Cursor extends Polygon {
 	
 	public static enum CursorType {LEFT, RIGHT, MIDDLE}
 	
-	public static final double cursorSize = 15;
+	public static final double cursorSize = 16;
 	private Color cursorColor = Color.WHITE;
 	private CursorType cursorType;
 	
