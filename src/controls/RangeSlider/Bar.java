@@ -52,15 +52,15 @@ public class Bar {
 		} else {
 			bar1.setWidth((value2 - rangeSlider.getMinValue()) * width
 					/ (rangeSlider.getMaxValue() - rangeSlider.getMinValue()));
-			bar1.setLayoutX(rangeSlider.getRangeSliderSkin().getMaxCursor().getLayoutX() - bar1.getWidth());
+			bar1.setLayoutX(RangeSliderSkin.horizontalPadding + Cursor.cursorSize);
 
-			barMid.setWidth(((value2 - value1) - rangeSlider.getMinValue()) * width
+			barMid.setWidth(((value1 - value2) - rangeSlider.getMinValue()) * width
 					/ (rangeSlider.getMaxValue() - rangeSlider.getMinValue()));
-			barMid.setLayoutX(rangeSlider.getRangeSliderSkin().getMaxCursor().getLayoutX());
+			barMid.setLayoutX(bar1.getLayoutX() + bar1.getWidth());
 
 			bar2.setWidth(((rangeSlider.getMaxValue() - value1) - rangeSlider.getMinValue()) * width
 					/ (rangeSlider.getMaxValue() - rangeSlider.getMinValue()));
-			bar2.setLayoutX(rangeSlider.getRangeSliderSkin().getMinCursor().getLayoutX());
+			bar2.setLayoutX(barMid.getLayoutX() + barMid.getWidth());
 
 		}
 	}
