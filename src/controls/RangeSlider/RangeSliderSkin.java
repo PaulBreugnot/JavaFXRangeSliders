@@ -64,6 +64,15 @@ public class RangeSliderSkin extends SkinBase<RangeSlider> {
 	}
 
 	private void initGraphics() {
+		rangeSlider.getScene().heightProperty().addListener(new ChangeListener<Number>() {
+			// If the scene changes, cursors positions are adjusted (bug otherwise...)
+			@Override
+			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+				updateCursorXPos(minCursor, rangeSlider.getValue1());
+				updateCursorXPos(maxCursor, rangeSlider.getValue2());
+				updateCursorXPos(midCursor, rangeSlider.getValueMid());
+			}
+		});;
 		initBar();
 		initMinCursor();
 		initMaxCursor();
@@ -96,6 +105,7 @@ public class RangeSliderSkin extends SkinBase<RangeSlider> {
 			// If the bar width changes, cursors positions are adjusted
 			@Override
 			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+				System.out.println("new bar width : " + (double) newValue);
 				updateCursorXPos(minCursor, rangeSlider.getValue1());
 				updateCursorXPos(maxCursor, rangeSlider.getValue2());
 				updateCursorXPos(midCursor, rangeSlider.getValueMid());

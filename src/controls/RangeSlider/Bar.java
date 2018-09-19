@@ -1,6 +1,7 @@
 package controls.RangeSlider;
 
 import javafx.beans.binding.Bindings;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -18,11 +19,9 @@ public class Bar {
 	private Rectangle bar2;
 
 	// Colors
-	private Paint fill1 = Color.GREEN;
+	private SimpleBooleanProperty internSelected = new SimpleBooleanProperty();
 	private double opacity1;
-	private Paint fillMid = Color.BLUE;
 	private double opacityMid;
-	private Paint fill2 = Color.RED;
 	private double opacity2;
 
 	// RangeSlider
@@ -33,22 +32,27 @@ public class Bar {
 	public Bar(RangeSlider rangeSlider) {
 		this.rangeSlider = rangeSlider;
 		initBars();
+		initOpacityListener();
 		width.bind(Bindings.add(Bindings.add(bar1.widthProperty(), barMid.widthProperty()), bar2.widthProperty()));
 	}
 
 	private void layoutBars(double value1, double value2, double width) {
-		if (value1 <= value2) {
-			bar1.setWidth((value1 - rangeSlider.getMinValue())
-							* width / (rangeSlider.getMaxValue() - rangeSlider.getMinValue()));
+		internSelected.set(value1 <= value2);
+		if (internSelected.get()) {
+			double bar1Distance = (value1 - rangeSlider.getMinValue())
+					* width / (rangeSlider.getMaxValue() - rangeSlider.getMinValue());
+			bar1.setWidth(bar1Distance);
 			bar1.setLayoutX(RangeSliderSkin.horizontalPadding + Cursor.cursorSize);
 
 			barMid.setWidth(((value2 - value1) - rangeSlider.getMinValue()) * width
 					/ (rangeSlider.getMaxValue() - rangeSlider.getMinValue()));
 			barMid.setLayoutX(bar1.getLayoutX() + bar1.getWidth());
-
-			bar2.setWidth(((rangeSlider.getMaxValue() - value2) - rangeSlider.getMinValue()) * width
-					/ (rangeSlider.getMaxValue() - rangeSlider.getMinValue()));
+			
+			double bar2Distance = ((rangeSlider.getMaxValue() - value2) - rangeSlider.getMinValue()) * width
+			/ (rangeSlider.getMaxValue() - rangeSlider.getMinValue());
+			bar2.setWidth(bar2Distance);
 			bar2.setLayoutX(barMid.getLayoutX() + barMid.getWidth());
+			
 		} else {
 			bar1.setWidth((value2 - rangeSlider.getMinValue()) * width
 					/ (rangeSlider.getMaxValue() - rangeSlider.getMinValue()));
@@ -78,7 +82,7 @@ public class Bar {
 	}
 
 	public double getY() {
-		return bar1.getLayoutY();
+		return barMid.getLayoutY();
 	}
 
 	public SimpleDoubleProperty widthProperty() {
@@ -100,21 +104,25 @@ public class Bar {
 	private void initBars() {
 		bar1 = new Rectangle();
 		bar1.setHeight(barHeight);
-		bar1.setStroke(Color.BLACK);
-		bar1.setStrokeWidth(1);
-		bar1.setFill(fill1);
+		bar1.setId("bar");
+		//bar1.setStyle("-fx-fill: red;");
+//		bar1.setStroke(Color.BLACK);
+//		bar1.setStrokeWidth(1);
+//		bar1.setFill(fill1);
 
 		barMid = new Rectangle();
 		barMid.setHeight(barHeight);
-		barMid.setStroke(Color.BLACK);
-		barMid.setStrokeWidth(1);
-		barMid.setFill(fillMid);
+		barMid.setId("bar");
+//		barMid.setStroke(Color.BLACK);
+//		barMid.setStrokeWidth(1);
+//		barMid.setFill(fillMid);
 
 		bar2 = new Rectangle();
 		bar2.setHeight(barHeight);
-		bar2.setStroke(Color.BLACK);
-		bar2.setStrokeWidth(1);
-		bar2.setFill(fill2);
+		bar2.setId("bar");
+//		bar2.setStroke(Color.BLACK);
+//		bar2.setStrokeWidth(1);
+//		bar2.setFill(fill2);
 
 		bar1.setHeight(barHeight);
 		barMid.setHeight(barHeight);
@@ -134,4 +142,23 @@ public class Bar {
 			}
 		});
 	}
+	
+	private void initOpacityListener() {
+		internSelected.addListener(new ChangeListener<Boolean>() {
+			@Override
+			public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+				if (newValue) {
+					bar1.setOpacity(0.5);
+					barMid.setOpacity(1);
+					bar2.setOpacity(0.5);
+				}
+				else {
+					bar1.setOpacity(1);
+					barMid.setOpacity(0.5);
+					bar2.setOpacity(1);
+				}
+			}
+		});
+	}
+	
 }

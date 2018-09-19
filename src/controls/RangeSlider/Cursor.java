@@ -54,9 +54,7 @@ public class Cursor extends Polygon {
 			points = new Double[]{};
 		}
 		getPoints().addAll(points);
-		setFill(cursorColor);
-		setStroke(Color.BLACK);
-		setStrokeWidth(1);
+		setId("cursor");
 	}
 	
 	public double getOffset() {

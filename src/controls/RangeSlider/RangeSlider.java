@@ -3,6 +3,7 @@ package controls.RangeSlider;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.scene.Scene;
 import javafx.scene.control.Control;
 import javafx.scene.control.Skin;
 
@@ -67,6 +68,12 @@ public class RangeSlider extends Control {
 		});
 		valueMid = new SimpleDoubleProperty((value2 + value1) / 2);
 
+		sceneProperty().addListener(new ChangeListener<Scene>() {
+			@Override
+			public void changed(ObservableValue<? extends Scene> observable, Scene oldValue, Scene newValue) {
+				newValue.getStylesheets().add("style/default.css");
+			}
+		});
 	}
 
 	public void computeMidValue(double v1, double v2) {
