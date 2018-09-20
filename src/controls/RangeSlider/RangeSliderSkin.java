@@ -8,16 +8,13 @@ import javafx.geometry.VPos;
 import javafx.scene.control.SkinBase;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.CycleMethod;
-import javafx.scene.paint.LinearGradient;
 import javafx.scene.paint.Stop;
-import javafx.scene.shape.Rectangle;
 
 public class RangeSliderSkin extends SkinBase<RangeSlider> {
 
 	// Component layout parameters
 	public static final double horizontalPadding = 5;
-	public static final double verticalPadding = 5;
+	public static final double verticalPadding = 0;
 
 	// Main Component
 	private RangeSlider rangeSlider;
@@ -37,7 +34,7 @@ public class RangeSliderSkin extends SkinBase<RangeSlider> {
 		super(rangeSlider);
 		this.rangeSlider = rangeSlider;
 		initGraphics();
-	}
+		}
 	
 	public Cursor getMinCursor() {
 		return minCursor;
@@ -188,6 +185,7 @@ public class RangeSliderSkin extends SkinBase<RangeSlider> {
 					maxCursor.updateValue(maxCursor.getDragOriginLayout() + delta, bar.getWidth());
 					rangeSlider.setListenValueChanges(true);
 				}
+				rangeSlider.computeMidValue(rangeSlider.getValue1(), rangeSlider.getValue2());
 			}
 		});
 	}
