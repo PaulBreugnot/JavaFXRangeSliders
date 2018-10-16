@@ -22,6 +22,7 @@ public class RangeSlider extends Control {
 	private SimpleDoubleProperty value1;
 	private SimpleDoubleProperty valueMid;
 	private SimpleDoubleProperty value2;
+	private SimpleDoubleProperty rangeWidth;
 
 	private boolean listenValueChanges = true;
 
@@ -39,15 +40,9 @@ public class RangeSlider extends Control {
 			@Override
 			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
 				if (listenValueChanges) {
-//					if ((double) newValue <= getValue2()) {
-//						System.out.println("Normal : " + ((getValue2() + (double) newValue) / 2));
-//						valueMid.set((getValue2() + (double) newValue) / 2);
-//					} else {
-//						System.out.println("Inverted : " + ((- maxValue + (double) newValue + getValue2()) / 2));
-//						valueMid.set((- maxValue + (double) newValue + getValue2()) / 2);
-//					}
 					computeMidValue((double) newValue, getValue2());
 				}
+				computeRangeWidth((double) newValue, getValue2());
 			}
 		});
 		this.value2 = new SimpleDoubleProperty(value2);
@@ -55,18 +50,14 @@ public class RangeSlider extends Control {
 			@Override
 			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
 				if (listenValueChanges) {
-//					if (getValue1() <= (double) newValue) {
-//						System.out.println("Normal : " + (((double) newValue + getValue1()) / 2));
-//						valueMid.set(((double) newValue + getValue1()) / 2);
-//					} else {
-//						System.out.println("Inverted : " + ((- maxValue + getValue1() + (double) newValue) / 2));
-//						valueMid.set((- maxValue + getValue1() + (double) newValue) / 2);
-//					}
 					computeMidValue(getValue1(), (double) newValue);
 				}
+				computeRangeWidth(getValue1(), (double) newValue);
 			}
 		});
 		valueMid = new SimpleDoubleProperty((value2 + value1) / 2);
+		
+		rangeWidth = new SimpleDoubleProperty();
 
 		sceneProperty().addListener(new ChangeListener<Scene>() {
 			@Override
@@ -78,10 +69,11 @@ public class RangeSlider extends Control {
 
 	public void computeMidValue(double v1, double v2) {
 		if (v1 <= v2) {
-			System.out.println("Normal : " + ((v2 + v1) / 2));
+			// System.out.println("Normal : " + ((v2 + v1) / 2));
 			valueMid.set((v2 + v1) / 2);
 		} else {
 			double midValue = (v1 - (maxValue - minValue) + v2) / 2;
+			// System.out.println("Inverted : " + midValue);
 			if (midValue >= minValue && midValue <= maxValue) {
 				valueMid.set(midValue);
 			}
@@ -90,6 +82,16 @@ public class RangeSlider extends Control {
 			}
 		}
 	}
+	
+	private void computeRangeWidth(double v1, double v2) {
+		if (v1 <= v2) {
+			rangeWidth.set(v2 - v1);
+		}
+		else {
+			rangeWidth.set(v2 - minValue + maxValue - v1);
+		}
+	}
+	
 	public void setMinValue(double minValue) {
 		this.minValue = minValue;
 	}
@@ -140,6 +142,18 @@ public class RangeSlider extends Control {
 
 	public double getValueMid() {
 		return valueMid.get();
+	}
+	
+	public SimpleDoubleProperty rangeWidthProperty() {
+		return rangeWidth;
+	}
+	
+	public void forceRangeWidth(double rangeWidth) {
+		this.rangeWidth.set(rangeWidth);
+	}
+	
+	public double getRangeWidth() {
+		return rangeWidth.get();
 	}
 
 	public void setMode(Mode mode) {

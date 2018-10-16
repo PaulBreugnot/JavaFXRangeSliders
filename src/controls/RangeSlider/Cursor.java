@@ -93,7 +93,7 @@ public class Cursor extends Polygon {
 				break;
 			case CYCLIC:
 				value = rangeSlider.getMaxValue();
-				rangeSlider. getRangeSliderSkin().setReinitializeDrag(true);
+				rangeSlider.getRangeSliderSkin().setReinitializeDrag(true);
 			}
 		} else if (value > rangeSlider.getMaxValue()) {
 			switch(rangeSlider.getMode()) {

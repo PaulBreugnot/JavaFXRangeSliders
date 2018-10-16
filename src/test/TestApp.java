@@ -12,7 +12,7 @@ public class TestApp extends Application {
 	@Override
     public void start(Stage primaryStage) throws Exception {
         VBox root = new VBox();
-        Control control = new RangeSlider(0, 10, 0.1, 9.9, RangeSlider.Mode.CYCLIC);
+        Control control = new RangeSlider(0, 10, 2, 5, RangeSlider.Mode.CYCLIC);
         root.getChildren().addAll(control);
         VBox.setVgrow(control, Priority.ALWAYS);
         Scene scene = new Scene(root, 320, 200);
