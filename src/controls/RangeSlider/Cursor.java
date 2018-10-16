@@ -109,12 +109,32 @@ public class Cursor extends Polygon {
 		switch (getCursorType()) {
 		case LEFT:
 			rangeSlider.setValue1(value);
+			rangeSlider.setValueMid((rangeSlider.getValue2() + value) / 2);
+			rangeSlider.setRange(rangeSlider.getValue2() - value);
 			break;
 		case RIGHT:
 			rangeSlider.setValue2(value);
+			rangeSlider.setValueMid((value + rangeSlider.getValue1()) / 2);
+			rangeSlider.setRange(value - rangeSlider.getValue1());
 			break;
 		case MIDDLE:
-			rangeSlider.setValueMid(value);
+			double newValue1 = value - rangeSlider.getRange() / 2;
+			double newValue2 = value + rangeSlider.getRange() / 2;
+			if (newValue1 < rangeSlider.getMinValue()) {
+				newValue1 = rangeSlider.getMinValue();
+				newValue2 = newValue1 + rangeSlider.getRange();
+				value = (newValue1 + newValue2) / 2;
+			}
+			else if (newValue2 > rangeSlider.getMaxValue()) {
+				newValue2 = rangeSlider.getMaxValue();
+				newValue1 = newValue2 - rangeSlider.getRange();
+				value = (newValue1 + newValue2) / 2;
+			}
+			// if ((newValue1 >= rangeSlider.getMinValue()) && newValue2 <= rangeSlider.getMaxValue()) {
+				rangeSlider.setValue1(newValue1);
+				rangeSlider.setValueMid(value);
+				rangeSlider.setValue2(newValue2);	
+			//}
 		}
 	}
 

@@ -123,14 +123,6 @@ public class RangeSliderSkin extends SkinBase<RangeSlider> {
 		updateCursorXPos(minCursor, rangeSlider.getValue1());
 		minCursor.setLayoutY(cursorYPos());
 		initCursorListeners(minCursor);
-
-		rangeSlider.value1Property().addListener(new ChangeListener<Number>() {
-			@Override
-			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-				// System.out.println("Value 1 changed : " + (double) newValue);
-				updateCursorXPos(minCursor, (double) newValue);
-			}
-		});
 	}
 
 	private void initMaxCursor() {
@@ -139,14 +131,6 @@ public class RangeSliderSkin extends SkinBase<RangeSlider> {
 		updateCursorXPos(maxCursor, rangeSlider.getValue2());
 		maxCursor.setLayoutY(cursorYPos());
 		initCursorListeners(maxCursor);
-
-		rangeSlider.value2Property().addListener(new ChangeListener<Number>() {
-			@Override
-			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-				// System.out.println("Value 2 changed : " + (double) newValue);
-				updateCursorXPos(maxCursor, (double) newValue);
-			}
-		});
 	}
 
 	private void initMidCursor() {
@@ -155,21 +139,6 @@ public class RangeSliderSkin extends SkinBase<RangeSlider> {
 		updateCursorXPos(midCursor, rangeSlider.getValueMid());
 		midCursor.setLayoutY(cursorYPos());
 		initCursorListeners(midCursor);
-
-		rangeSlider.valueMidProperty().addListener(new ChangeListener<Number>() {
-			@Override
-			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-				// System.out.println("Value mid changed : " + (double) newValue);
-				updateCursorXPos(midCursor, (double) newValue);
-			}
-		});
-		
-		rangeSlider.rangeWidthProperty().addListener(new ChangeListener<Number>() {
-			@Override
-			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-				System.out.println("Range width : " + (double) newValue);
-			}
-		});
 	}
 
 	private void initCursorListeners(Cursor cursor) {
@@ -198,6 +167,7 @@ public class RangeSliderSkin extends SkinBase<RangeSlider> {
 						} else {
 							// Force equality when we reach limit case
 							rangeSlider.setValue1(rangeSlider.getValue2());
+							rangeSlider.setRange(0);
 						}
 						break;
 					case RIGHT:
@@ -207,25 +177,16 @@ public class RangeSliderSkin extends SkinBase<RangeSlider> {
 						} else {
 							// Force equality when we reach limit case
 							rangeSlider.setValue2(rangeSlider.getValue1());
+							rangeSlider.setRange(0);
 						}
 						break;
 					default:
+						cursor.updateValue(newPos, bar.getWidth());
 					}
 				} else {
 					// Cyclic mode, cursors can move freely
 					cursor.updateValue(newPos, bar.getWidth());
 				}
-				if (cursor.getCursorType() == Cursor.CursorType.MIDDLE) {
-					rangeSlider.setListenValueChanges(false); // Avoid events loops
-					double delta = event.getSceneX() - cursorDragOrigin;
-					// update min and max values to follow mid cursor
-					minCursor.updateValue(minCursor.getDragOriginLayout() + delta, bar.getWidth());
-					maxCursor.updateValue(maxCursor.getDragOriginLayout() + delta, bar.getWidth());
-					rangeSlider.setListenValueChanges(true);
-				}
-				// Adjust mid value.
-				// Not needed theoretically, but mid cursor layout errors if not there.
-				rangeSlider.computeMidValue(rangeSlider.getValue1(), rangeSlider.getValue2());
 			}
 		});
 	}
@@ -243,7 +204,7 @@ public class RangeSliderSkin extends SkinBase<RangeSlider> {
 		}
 	}
 
-	private void updateCursorXPos(Cursor cursor, double value) {
+	public void updateCursorXPos(Cursor cursor, double value) {
 		// Compute the absolute cursor coordinate according to the rangeSlider value.
 		double x = bar.getX() + (value - rangeSlider.getMinValue()) * bar.getWidth()
 				/ (rangeSlider.getMaxValue() - rangeSlider.getMinValue());

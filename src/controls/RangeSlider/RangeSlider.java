@@ -22,7 +22,7 @@ public class RangeSlider extends Control {
 	private SimpleDoubleProperty value1;
 	private SimpleDoubleProperty valueMid;
 	private SimpleDoubleProperty value2;
-	private SimpleDoubleProperty rangeWidth;
+	private SimpleDoubleProperty range;
 
 	private boolean listenValueChanges = true;
 
@@ -39,26 +39,48 @@ public class RangeSlider extends Control {
 		this.value1.addListener(new ChangeListener<Number>() {
 			@Override
 			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-				if (listenValueChanges) {
-					computeMidValue((double) newValue, getValue2());
-				}
-				computeRangeWidth((double) newValue, getValue2());
+//				if (listenValueChanges) {
+//					computeMidValue((double) newValue, getValue2());
+//				}
+//				computeRangeWidth((double) newValue, getValue2());
+				rangeSliderSkin.updateCursorXPos(rangeSliderSkin.getMinCursor(), (double) newValue);
+				// System.out.println("Value 1 : " + newValue);
 			}
 		});
 		this.value2 = new SimpleDoubleProperty(value2);
 		this.value2.addListener(new ChangeListener<Number>() {
 			@Override
 			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-				if (listenValueChanges) {
-					computeMidValue(getValue1(), (double) newValue);
-				}
-				computeRangeWidth(getValue1(), (double) newValue);
+//				if (listenValueChanges) {
+//					computeMidValue(getValue1(), (double) newValue);
+//				}
+//				computeRangeWidth(getValue1(), (double) newValue);
+				rangeSliderSkin.updateCursorXPos(rangeSliderSkin.getMaxCursor(), (double) newValue);
+				// System.out.println("Value 2 : " + newValue);
 			}
 		});
-		valueMid = new SimpleDoubleProperty((value2 + value1) / 2);
 		
-		rangeWidth = new SimpleDoubleProperty();
-
+		valueMid = new SimpleDoubleProperty((value2 + value1) / 2);
+		valueMid.addListener(new ChangeListener<Number>() {
+			@Override
+			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+//				if (listenValueChanges) {
+//					computeMidValue(getValue1(), (double) newValue);
+//				}
+//				computeRangeWidth(getValue1(), (double) newValue);
+				rangeSliderSkin.updateCursorXPos(rangeSliderSkin.getMidCursor(), (double) newValue);
+				// System.out.println("Value Mid : " + newValue);
+			}
+		});
+		// valueMid = new SimpleDoubleProperty((value2 + value1) / 2);
+		
+		range = new SimpleDoubleProperty(value2 - value1);
+		range.addListener(new ChangeListener<Number>() {
+			@Override
+			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+				System.out.println("Range : " + newValue);
+			}
+		});
 		sceneProperty().addListener(new ChangeListener<Scene>() {
 			@Override
 			public void changed(ObservableValue<? extends Scene> observable, Scene oldValue, Scene newValue) {
@@ -85,10 +107,10 @@ public class RangeSlider extends Control {
 	
 	private void computeRangeWidth(double v1, double v2) {
 		if (v1 <= v2) {
-			rangeWidth.set(v2 - v1);
+			range.set(v2 - v1);
 		}
 		else {
-			rangeWidth.set(v2 - minValue + maxValue - v1);
+			range.set(v2 - minValue + maxValue - v1);
 		}
 	}
 	
@@ -145,15 +167,15 @@ public class RangeSlider extends Control {
 	}
 	
 	public SimpleDoubleProperty rangeWidthProperty() {
-		return rangeWidth;
+		return range;
 	}
 	
-	public void forceRangeWidth(double rangeWidth) {
-		this.rangeWidth.set(rangeWidth);
+	public void setRange(double range) {
+		this.range.set(range);
 	}
 	
-	public double getRangeWidth() {
-		return rangeWidth.get();
+	public double getRange() {
+		return range.get();
 	}
 
 	public void setMode(Mode mode) {
