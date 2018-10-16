@@ -109,33 +109,69 @@ public class Cursor extends Polygon {
 		switch (getCursorType()) {
 		case LEFT:
 			rangeSlider.setValue1(value);
-			rangeSlider.setValueMid((rangeSlider.getValue2() + value) / 2);
-			rangeSlider.setRange(rangeSlider.getValue2() - value);
+			rangeSlider.setValueMid(computeMidValue(value, rangeSlider.getValue2()));
+			rangeSlider.setRange(computeRange(value, rangeSlider.getValue2()));
 			break;
 		case RIGHT:
 			rangeSlider.setValue2(value);
-			rangeSlider.setValueMid((value + rangeSlider.getValue1()) / 2);
-			rangeSlider.setRange(value - rangeSlider.getValue1());
+			rangeSlider.setValueMid(computeMidValue(rangeSlider.getValue1(), value));
+			rangeSlider.setRange(computeRange(rangeSlider.getValue1(), value));
 			break;
 		case MIDDLE:
 			double newValue1 = value - rangeSlider.getRange() / 2;
 			double newValue2 = value + rangeSlider.getRange() / 2;
-			if (newValue1 < rangeSlider.getMinValue()) {
-				newValue1 = rangeSlider.getMinValue();
-				newValue2 = newValue1 + rangeSlider.getRange();
-				value = (newValue1 + newValue2) / 2;
-			}
-			else if (newValue2 > rangeSlider.getMaxValue()) {
-				newValue2 = rangeSlider.getMaxValue();
-				newValue1 = newValue2 - rangeSlider.getRange();
-				value = (newValue1 + newValue2) / 2;
-			}
-			// if ((newValue1 >= rangeSlider.getMinValue()) && newValue2 <= rangeSlider.getMaxValue()) {
+				if (newValue1 < rangeSlider.getMinValue()) {
+					switch(rangeSlider.getMode()) {
+					case LINEAR:
+						newValue1 = rangeSlider.getMinValue();
+						newValue2 = newValue1 + rangeSlider.getRange();
+						value = (newValue1 + newValue2) / 2;
+						break;
+					case CYCLIC:
+						newValue1 = rangeSlider.getMaxValue() + newValue1 - rangeSlider.getMinValue();
+					}
+				}
+				else if (newValue2 > rangeSlider.getMaxValue()) {
+					switch(rangeSlider.getMode()) {
+					case LINEAR:
+						newValue2 = rangeSlider.getMaxValue();
+						newValue1 = newValue2 - rangeSlider.getRange();
+						value = (newValue1 + newValue2) / 2;
+						break;
+					case CYCLIC:
+						newValue2 = rangeSlider.getMinValue() + newValue2 - rangeSlider.getMaxValue();
+					}
+				}
 				rangeSlider.setValue1(newValue1);
 				rangeSlider.setValueMid(value);
 				rangeSlider.setValue2(newValue2);	
-			//}
 		}
+	}
+	
+	private double computeMidValue(double v1, double v2) {
+		if (v1 <= v2) {
+			// System.out.println("Normal : " + ((v2 + v1) / 2));
+			return (v2 + v1) / 2;
+		} else {
+			double midValue;
+			double minValue = rangeSlider.getMinValue();
+			double maxValue = rangeSlider.getMaxValue();
+			midValue = (v1 - (maxValue - minValue) + v2) / 2;
+			// System.out.println("Inverted : " + midValue);
+			if (midValue >= minValue && midValue <= maxValue) {
+				return midValue;
+			}
+			else {
+				return midValue + maxValue - minValue;
+			}
+		}
+	}
+	
+	private double computeRange(double v1, double v2) {
+		if (v1 <= v2) {
+			return v2 - v1;
+		}
+		return v2 - rangeSlider.getMinValue() + rangeSlider.getMaxValue() - v1;
 	}
 
 	public CursorType getCursorType() {
