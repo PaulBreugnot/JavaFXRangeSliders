@@ -1,4 +1,4 @@
-package controls.RangeSlider;
+package controls.rangeSlider;
 
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.value.ChangeListener;
@@ -9,7 +9,7 @@ import javafx.scene.control.Skin;
 
 public class RangeSlider extends Control {
 
-	private RangeSliderSkin rangeSliderSkin;
+	protected RangeSliderSkin rangeSliderSkin;
 
 	public static enum Mode {
 		LINEAR, CYCLIC

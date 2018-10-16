@@ -1,4 +1,4 @@
-package controls.RangeSlider;
+package controls.rangeSlider;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -7,8 +7,6 @@ import javafx.geometry.HPos;
 import javafx.geometry.VPos;
 import javafx.scene.control.SkinBase;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.Stop;
 
 public class RangeSliderSkin extends SkinBase<RangeSlider> {
 
@@ -17,14 +15,14 @@ public class RangeSliderSkin extends SkinBase<RangeSlider> {
 	public static final double verticalPadding = 0;
 
 	// Main Component
-	private RangeSlider rangeSlider;
+	protected RangeSlider rangeSlider;
 
 	// Graphic Items
 	// private Rectangle bar;
-	private Cursor minCursor;
-	private Cursor maxCursor;
-	private Cursor midCursor;
-	private Bar bar;
+	protected Cursor minCursor;
+	protected Cursor maxCursor;
+	protected Cursor midCursor;
+	protected Bar bar;
 
 	// Cursor moves
 	private double cursorDragOrigin;
@@ -59,6 +57,10 @@ public class RangeSliderSkin extends SkinBase<RangeSlider> {
 	public void setReinitializeDrag(boolean reinitializeDrag) {
 		this.reinitializeDrag = reinitializeDrag;
 	}
+	
+	protected Bar getBar() {
+		return bar;
+	}
 
 	private void initGraphics() {
 		rangeSlider.getScene().heightProperty().addListener(new ChangeListener<Number>() {
@@ -77,14 +79,7 @@ public class RangeSliderSkin extends SkinBase<RangeSlider> {
 		initMidCursor();
 	}
 
-	private void initBar() {
-		bar = new Bar(rangeSlider);
-		Stop[] stops = new Stop[360];
-		for (int i = 0; i < 360; i++) {
-			stops[i] = new Stop(i / 360., Color.hsb(i, 1, 1));
-		}
-		// LinearGradient color = new LinearGradient(0, 0, 1, 0, true,
-		// CycleMethod.NO_CYCLE, stops);
+	protected void initBar() {
 
 //		bar.setOnMousePressed(new EventHandler<MouseEvent>() {
 //			public void handle(MouseEvent event) {

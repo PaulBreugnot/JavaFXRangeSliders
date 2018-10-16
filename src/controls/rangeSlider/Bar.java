@@ -1,4 +1,4 @@
-package controls.RangeSlider;
+package controls.rangeSlider;
 
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -6,7 +6,10 @@ import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.CycleMethod;
+import javafx.scene.paint.LinearGradient;
 import javafx.scene.paint.Paint;
+import javafx.scene.paint.Stop;
 import javafx.scene.shape.Rectangle;
 
 public class Bar {
@@ -161,4 +164,66 @@ public class Bar {
 		});
 	}
 	
+	public ChangeListener<Number> colorSetterForValue1 () {
+		return new ChangeListener<Number>() {
+			@Override
+			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+				layoutBars((double) newValue, rangeSlider.getValue2(), width.get());
+			}
+		};
+	}
+	
+	public void linkColorListeners() {
+		rangeSlider.value1Property().addListener(new ChangeListener<Number>() {
+			@Override
+			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+				setColors((double) newValue, rangeSlider.getValue2());
+			}
+		});
+		
+		rangeSlider.value2Property().addListener(new ChangeListener<Number>() {
+			@Override
+			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+				setColors(rangeSlider.getValue1(), (double) newValue);
+			}
+		});
+		
+	}
+	
+	private void setColors(double value1, double value2) {
+		internSelected.set(value1 <= value2);
+		//Stop[] stops;
+		if (internSelected.get()) {
+			bar1.setFill(subLinearGradient(0, value1));
+			rangeSlider.getRangeSliderSkin().getMinCursor().setFill(Color.hsb(value1, 1, 1));
+
+			barMid.setFill(subLinearGradient(value1, value2));
+			rangeSlider.getRangeSliderSkin().getMidCursor().setFill(Color.hsb((value2 + value1) / 2, 1, 1));
+			
+			bar2.setFill(subLinearGradient(value2, 360));
+			rangeSlider.getRangeSliderSkin().getMaxCursor().setFill(Color.hsb(value2, 1, 1));
+			
+		} else {
+			bar1.setFill(subLinearGradient(0, value2));
+			rangeSlider.getRangeSliderSkin().getMinCursor().setFill(Color.hsb(value1, 1, 1));
+
+			barMid.setFill(subLinearGradient(value2, value1));
+			rangeSlider.getRangeSliderSkin().getMidCursor().setFill(Color.hsb(rangeSlider.getValueMid(), 1, 1));
+			
+			bar2.setFill(subLinearGradient(value1, 360));
+			rangeSlider.getRangeSliderSkin().getMaxCursor().setFill(Color.hsb(value2, 1, 1));
+
+		}
+	}
+	
+	private LinearGradient subLinearGradient(double begin, double end) {
+		int pointsNumber = 50;
+		Stop[] stops = new Stop[pointsNumber];
+		for (int i = 0; i < pointsNumber; i++) {
+			double index = (double) i / (pointsNumber - 1);
+			stops[i] = new Stop(index, Color.hsb(begin + index * (end - begin), 1, 1));
+		}
+		return new LinearGradient(0, 0, 1, 0, true,
+		CycleMethod.NO_CYCLE, stops);
+	}
 }
