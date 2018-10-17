@@ -1,0 +1,14 @@
+
+#bar {
+	-fx-fill: green;
+	-fx-stroke: black;
+	-fx-stroke-width: 2;
+	-fx-arc-height: 7;
+	-fx-arc-width: 7;
+}
+
+#cursor {
+	-fx-fill: limegreen;
+	-fx-stroke: black;
+	-fx-stroke-width: 1;
+}
