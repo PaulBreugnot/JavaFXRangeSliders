@@ -5,6 +5,8 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.event.EventHandler;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.CycleMethod;
 import javafx.scene.paint.LinearGradient;
@@ -108,24 +110,43 @@ public class Bar {
 		bar1 = new Rectangle();
 		bar1.setHeight(barHeight);
 		bar1.setId("bar");
-		//bar1.setStyle("-fx-fill: red;");
-//		bar1.setStroke(Color.BLACK);
-//		bar1.setStrokeWidth(1);
-//		bar1.setFill(fill1);
+		bar1.setOnMouseClicked(new EventHandler<MouseEvent>() {
+			public void handle(MouseEvent event) {
+				rangeSlider.getRangeSliderSkin().getMinCursor().updateValue(
+						event.getX() + RangeSliderSkin.horizontalPadding, width.get());
+			}
+		});
 
 		barMid = new Rectangle();
 		barMid.setHeight(barHeight);
 		barMid.setId("bar");
-//		barMid.setStroke(Color.BLACK);
-//		barMid.setStrokeWidth(1);
-//		barMid.setFill(fillMid);
+		barMid.setOnMouseClicked(new EventHandler<MouseEvent>() {
+			public void handle(MouseEvent event) {
+				if (event.getX() < barMid.getWidth() / 2) {
+					rangeSlider.getRangeSliderSkin().getMinCursor().updateValue(
+							event.getX() + bar1.getWidth() + RangeSliderSkin.horizontalPadding,
+							width.get());
+				}
+				else {
+					rangeSlider.getRangeSliderSkin().getMaxCursor().updateValue(
+							bar1.getWidth() + event.getX()
+							+ RangeSliderSkin.horizontalPadding + Cursor.cursorSize,
+							width.get());
+				}
+			}
+		});
 
 		bar2 = new Rectangle();
 		bar2.setHeight(barHeight);
 		bar2.setId("bar");
-//		bar2.setStroke(Color.BLACK);
-//		bar2.setStrokeWidth(1);
-//		bar2.setFill(fill2);
+		bar2.setOnMouseClicked(new EventHandler<MouseEvent>() {
+			public void handle(MouseEvent event) {
+				rangeSlider.getRangeSliderSkin().getMaxCursor().updateValue(
+						bar1.getWidth() + barMid.getWidth() + event.getX()
+						+ RangeSliderSkin.horizontalPadding + Cursor.cursorSize,
+						width.get());
+			}
+		});
 
 		bar1.setHeight(barHeight);
 		barMid.setHeight(barHeight);
@@ -187,12 +208,10 @@ public class Bar {
 				setColors(rangeSlider.getValue1(), (double) newValue);
 			}
 		});
-		
 	}
 	
-	private void setColors(double value1, double value2) {
+	public void setColors(double value1, double value2) {
 		internSelected.set(value1 <= value2);
-		//Stop[] stops;
 		if (internSelected.get()) {
 			bar1.setFill(subLinearGradient(0, value1));
 			rangeSlider.getRangeSliderSkin().getMinCursor().setFill(Color.hsb(value1, 1, 1));

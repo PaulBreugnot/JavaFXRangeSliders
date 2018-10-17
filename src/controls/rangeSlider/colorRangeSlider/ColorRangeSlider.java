@@ -14,6 +14,7 @@ public class ColorRangeSlider extends RangeSlider {
 	@Override
 	protected Skin<?> createDefaultSkin() {
 		rangeSliderSkin = new ColorRangeSliderSkin(this);
+		rangeSliderSkin.getBar().setColors(getValue1(), getValue2());
 		return rangeSliderSkin;
 	}
 }

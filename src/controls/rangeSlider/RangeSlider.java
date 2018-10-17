@@ -63,7 +63,7 @@ public class RangeSlider extends Control {
 		range.addListener(new ChangeListener<Number>() {
 			@Override
 			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-				System.out.println("Range : " + newValue);
+				// System.out.println("Range : " + newValue);
 			}
 		});
 		sceneProperty().addListener(new ChangeListener<Scene>() {

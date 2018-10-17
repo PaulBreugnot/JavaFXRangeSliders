@@ -58,7 +58,7 @@ public class RangeSliderSkin extends SkinBase<RangeSlider> {
 		this.reinitializeDrag = reinitializeDrag;
 	}
 	
-	protected Bar getBar() {
+	public Bar getBar() {
 		return bar;
 	}
 
@@ -80,13 +80,8 @@ public class RangeSliderSkin extends SkinBase<RangeSlider> {
 	}
 
 	protected void initBar() {
+		bar = new Bar(rangeSlider);
 
-//		bar.setOnMousePressed(new EventHandler<MouseEvent>() {
-//			public void handle(MouseEvent event) {
-//				// event.getX() = coordinate in the bar coordinate system
-//				updateValue(midCursor, event.getX());
-//			}
-//		});
 //
 //		bar.setOnMouseDragged(new EventHandler<MouseEvent>() {
 //			public void handle(MouseEvent event) {
@@ -95,7 +90,16 @@ public class RangeSliderSkin extends SkinBase<RangeSlider> {
 //			}
 //		});
 //
-		bar.widthProperty().addListener(new ChangeListener<Number>() {
+		bar.widthProperty().addListener(barWidthListener());
+
+		getChildren().add(bar.getBar1());
+		getChildren().add(bar.getBarMid());
+		getChildren().add(bar.getBar2());
+
+	}
+	
+	protected ChangeListener<Number> barWidthListener() {
+		return new ChangeListener<Number>() {
 			// If the bar width changes, cursors positions are adjusted
 			@Override
 			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
@@ -104,12 +108,7 @@ public class RangeSliderSkin extends SkinBase<RangeSlider> {
 				updateCursorXPos(maxCursor, rangeSlider.getValue2());
 				updateCursorXPos(midCursor, rangeSlider.getValueMid());
 			}
-		});
-
-		getChildren().add(bar.getBar1());
-		getChildren().add(bar.getBarMid());
-		getChildren().add(bar.getBar2());
-
+		};
 	}
 
 	private void initMinCursor() {
