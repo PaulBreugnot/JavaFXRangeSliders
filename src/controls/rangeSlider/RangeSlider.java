@@ -95,6 +95,8 @@ public class RangeSlider extends Control {
 	}
 
 	public void setValue1(double value1) {
+		this.valueMid.set(computeMidValue(value1, getValue2()));
+		this.range.set(computeRange(value1, getValue2()));
 		this.value1.set(value1);
 	}
 
@@ -107,6 +109,8 @@ public class RangeSlider extends Control {
 	}
 
 	public void setValue2(double value2) {
+		this.valueMid.set(computeMidValue(getValue1(), value2));
+		this.range.set(computeRange(getValue1(), value2));
 		this.value2.set(value2);
 	}
 
@@ -144,6 +148,31 @@ public class RangeSlider extends Control {
 
 	public Mode getMode() {
 		return mode;
+	}
+
+	private double computeMidValue(double v1, double v2) {
+		if (v1 <= v2) {
+			// System.out.println("Normal : " + ((v2 + v1) / 2));
+			return (v2 + v1) / 2;
+		} else {
+			double midValue;
+			double minValue = getMinValue();
+			double maxValue = getMaxValue();
+			midValue = (v1 - (maxValue - minValue) + v2) / 2;
+			// System.out.println("Inverted : " + midValue);
+			if (midValue >= minValue && midValue <= maxValue) {
+				return midValue;
+			} else {
+				return midValue + maxValue - minValue;
+			}
+		}
+	}
+	
+	private double computeRange(double v1, double v2) {
+		if (v1 <= v2) {
+			return v2 - v1;
+		}
+		return v2 - getMinValue() + getMaxValue() - v1;
 	}
 
 	@Override
