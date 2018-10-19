@@ -1,26 +1,14 @@
 package controls.rangeSlider;
 
+import controls.simpleSlider.Slider;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.scene.Scene;
-import javafx.scene.control.Control;
 import javafx.scene.control.Skin;
 
-public class RangeSlider extends Control {
+public class RangeSlider extends Slider {
 
-	protected RangeSliderSkin rangeSliderSkin;
-
-	public static enum Mode {
-		LINEAR, CYCLIC
-	}
-
-	private Mode mode = Mode.LINEAR;
-
-	private double minValue;
-	private double maxValue;
 	private SimpleDoubleProperty value1;
-	private SimpleDoubleProperty valueMid;
 	private SimpleDoubleProperty value2;
 	private SimpleDoubleProperty range;
 
@@ -30,14 +18,14 @@ public class RangeSlider extends Control {
 	}
 
 	public RangeSlider(double minValue, double maxValue, double value1, double value2) {
-		super();
+		super(minValue, maxValue, (value2 + value1) / 2);
 		this.minValue = minValue;
 		this.maxValue = maxValue;
 		this.value1 = new SimpleDoubleProperty(value1);
 		this.value1.addListener(new ChangeListener<Number>() {
 			@Override
 			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-				rangeSliderSkin.updateCursorXPos(rangeSliderSkin.getMinCursor(), (double) newValue);
+				sliderSkin.updateCursorXPos(((RangeSliderSkin) sliderSkin).getMinCursor(), (double) newValue);
 				// System.out.println("Value 1 : " + newValue);
 			}
 		});
@@ -45,17 +33,8 @@ public class RangeSlider extends Control {
 		this.value2.addListener(new ChangeListener<Number>() {
 			@Override
 			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-				rangeSliderSkin.updateCursorXPos(rangeSliderSkin.getMaxCursor(), (double) newValue);
-				// System.out.println("Value 2 : " + newValue);
-			}
-		});
-		
-		valueMid = new SimpleDoubleProperty((value2 + value1) / 2);
-		valueMid.addListener(new ChangeListener<Number>() {
-			@Override
-			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-				rangeSliderSkin.updateCursorXPos(rangeSliderSkin.getMidCursor(), (double) newValue);
-				// System.out.println("Value Mid : " + newValue);
+				System.out.println("Value 2 : " + newValue);
+				sliderSkin.updateCursorXPos(((RangeSliderSkin) sliderSkin).getMaxCursor(), (double) newValue);
 			}
 		});
 		
@@ -66,28 +45,6 @@ public class RangeSlider extends Control {
 				// System.out.println("Range : " + newValue);
 			}
 		});
-		sceneProperty().addListener(new ChangeListener<Scene>() {
-			@Override
-			public void changed(ObservableValue<? extends Scene> observable, Scene oldValue, Scene newValue) {
-				newValue.getStylesheets().add("style/default.css");
-			}
-		});
-	}
-	
-	public void setMinValue(double minValue) {
-		this.minValue = minValue;
-	}
-
-	public double getMinValue() {
-		return minValue;
-	}
-
-	public void setMaxValue(double maxValue) {
-		this.maxValue = maxValue;
-	}
-
-	public double getMaxValue() {
-		return maxValue;
 	}
 
 	public SimpleDoubleProperty value1Property() {
@@ -119,15 +76,15 @@ public class RangeSlider extends Control {
 	}
 
 	public SimpleDoubleProperty valueMidProperty() {
-		return valueMid;
+		return valueProperty();
 	}
 
 	public void setValueMid(double valueMid) {
-		this.valueMid.set(valueMid);
+		setValue(valueMid);
 	}
 
 	public double getValueMid() {
-		return valueMid.get();
+		return getValue();
 	}
 	
 	public SimpleDoubleProperty rangeWidthProperty() {
@@ -140,14 +97,6 @@ public class RangeSlider extends Control {
 	
 	public double getRange() {
 		return range.get();
-	}
-
-	public void setMode(Mode mode) {
-		this.mode = mode;
-	}
-
-	public Mode getMode() {
-		return mode;
 	}
 
 	private double computeMidValue(double v1, double v2) {
@@ -177,11 +126,11 @@ public class RangeSlider extends Control {
 
 	@Override
 	protected Skin<?> createDefaultSkin() {
-		rangeSliderSkin = new RangeSliderSkin(this);
-		return rangeSliderSkin;
+		sliderSkin = new RangeSliderSkin(this);
+		return sliderSkin;
 	}
-
+	
 	public RangeSliderSkin getRangeSliderSkin() {
-		return rangeSliderSkin;
+		return (RangeSliderSkin) sliderSkin;
 	}
 }
