@@ -100,6 +100,7 @@ public class Cursor extends Polygon {
 		// cursor X coordinate in the bar coordinate system.
 		double value = slider.getMinValue() + (newPos - (SimpleSliderSkin.horizontalPadding + getOffset()))
 				* (slider.getMaxValue() - slider.getMinValue()) / barWidth;
+		System.out.println("Computed value : " + value);
 
 		if (value < slider.getMinValue()) {
 			switch (slider.getMode()) {
@@ -107,7 +108,8 @@ public class Cursor extends Polygon {
 				value = slider.getMinValue();
 				break;
 			case CYCLIC:
-				value = slider.getMaxValue();
+				// 0.99 is a corrective factor to go significantly to the other side.
+				value = 0.99 * slider.getMaxValue();
 				slider.getSliderSkin().setReinitializeDrag(true);
 			}
 		} else if (value > slider.getMaxValue()) {
@@ -116,7 +118,8 @@ public class Cursor extends Polygon {
 				value = slider.getMaxValue();
 				break;
 			case CYCLIC:
-				value = slider.getMinValue();
+				// 1.01 is a corrective factor to go significantly to the other side.
+				value = 1.01 * slider.getMinValue();
 				slider.getSliderSkin().setReinitializeDrag(true);
 			}
 		}

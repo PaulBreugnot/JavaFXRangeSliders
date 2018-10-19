@@ -35,7 +35,7 @@ public abstract class Slider extends Control {
 			@Override
 			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
 				sliderSkin.updateCursorXPos(sliderSkin.getMidCursor(), (double) newValue);
-				// System.out.println("Value Mid : " + newValue);
+				System.out.println("Value Mid : " + newValue);
 			}
 		});
 		

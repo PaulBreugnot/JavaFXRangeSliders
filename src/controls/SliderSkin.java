@@ -66,9 +66,6 @@ public abstract class SliderSkin extends SkinBase<Slider> {
 		// Compute the absolute cursor coordinate according to the rangeSlider value.
 		double x = bar.getX() + (value - slider.getMinValue()) * bar.getWidth()
 				/ (slider.getMaxValue() - slider.getMinValue());
-		System.out.println("Value : " + value);
-		System.out.println("width : " + bar.getWidth());
-		System.out.println(x);
 		x += cursor.getOffset();
 		cursor.setLayoutX(x + horizontalPadding);
 	}

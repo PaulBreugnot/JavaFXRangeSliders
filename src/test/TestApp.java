@@ -1,5 +1,6 @@
 package test;
 
+import colorSlider.simpleColorSlider.SimpleColorSlider;
 import controls.rangeSlider.RangeSlider;
 import controls.rangeSlider.colorRangeSlider.ColorRangeSlider;
 import controls.simpleSlider.SimpleSlider;
@@ -21,11 +22,11 @@ public class TestApp extends Application {
         Control control2 = new RangeSlider(0, 10, 2, 5, RangeSlider.Mode.CYCLIC);
         control2.getStylesheets().clear();
         control2.getStylesheets().add("style/test.css");
-        // Control control3 = new ColorRangeSlider(100, 150);
-        Control control4 = new SimpleSlider(0, 10, 5, RangeSlider.Mode.LINEAR);
+        Control control3 = new SimpleColorSlider(100);
+        Control control4 = new SimpleSlider(0, 10, 10, RangeSlider.Mode.CYCLIC);
         root.getChildren().add(control1);
         root.getChildren().add(control2);
-        // root.getChildren().add(control3);
+        root.getChildren().add(control3);
         root.getChildren().add(control4);
         // VBox.setVgrow(control, Priority.ALWAYS);
         Scene scene = new Scene(root, 320, 200);

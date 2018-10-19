@@ -64,7 +64,7 @@ public abstract class Bar {
 	
 	protected abstract void initBarWidthProperty();
 	
-	protected abstract void setColors(double value1, double value2);
+	// public abstract void setColors(double value1, double value2);
 	/*****************************************************************/
 	
 	protected LinearGradient subLinearGradient(double begin, double end) {

@@ -7,6 +7,7 @@ public class SimpleSlider extends Slider {
 
 	public SimpleSlider(double minValue, double maxValue, double value) {
 		super(minValue, maxValue, value);
+		getStylesheets().add("style/default-slider.css");
 	}
 	
 	public SimpleSlider(double minValue, double maxValue, double value, Mode mode) {

@@ -38,9 +38,4 @@ public class SimpleBar extends Bar {
 	protected void initBarWidthProperty() {
 		width.bind(bar1.widthProperty());
 	}
-
-	@Override
-	public void setColors(double value1, double value2) {
-		bar1.setFill(subLinearGradient(0, 360));
-	}
 }
