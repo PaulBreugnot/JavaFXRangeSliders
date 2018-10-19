@@ -1,22 +1,14 @@
-package controls.simpleSlider;
+package controls;
 
-import controls.Cursor;
-import controls.rangeSlider.RangeSlider;
-import controls.rangeSlider.RangeSliderSkin;
-import javafx.beans.binding.Bindings;
-import javafx.beans.property.SimpleBooleanProperty;
+import controls.simpleSlider.SimpleSliderSkin;
 import javafx.beans.property.SimpleDoubleProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.event.EventHandler;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.CycleMethod;
 import javafx.scene.paint.LinearGradient;
 import javafx.scene.paint.Stop;
 import javafx.scene.shape.Rectangle;
 
-public class Bar {
+public abstract class Bar {
 	// Layout parameters
 	public static final double barHeight = 10;
 
@@ -24,19 +16,14 @@ public class Bar {
 	protected Rectangle bar1;
 
 	// RangeSlider
-	protected SimpleSlider slider;
+	protected Slider slider;
 
 	protected SimpleDoubleProperty width = new SimpleDoubleProperty();
 
-	public Bar(SimpleSlider slider) {
+	public Bar(Slider slider) {
 		this.slider = slider;
 		initBars();
 		initBarWidthProperty();
-	}
-
-	protected void layoutBars(double width) {
-		bar1.setWidth(width);
-		bar1.setLayoutX(SimpleSliderSkin.horizontalPadding + Cursor.cursorSize);
 	}
 
 	public void setWidth(double width) {
@@ -58,7 +45,7 @@ public class Bar {
 	public SimpleDoubleProperty widthProperty() {
 		return width;
 	}
-
+	
 	public Rectangle getBar1() {
 		return bar1;
 	}
@@ -66,29 +53,20 @@ public class Bar {
 	public double getStrokeWidth() {
 		return bar1.getStrokeWidth();
 	}
-
-	protected void initBars() {
-		bar1 = new Rectangle();
-		bar1.setHeight(barHeight);
-		bar1.setId("bar");
-		bar1.setOnMouseClicked(new EventHandler<MouseEvent>() {
-			public void handle(MouseEvent event) {
-				((SimpleSliderSkin) slider.getSliderSkin()).getMidCursor()
-						.updateValue(event.getX() + SimpleSliderSkin.horizontalPadding + Cursor.cursorSize / 2, width.get());
-			}
-		});
-
-		bar1.setHeight(barHeight);
-	}
-
-	protected void initBarWidthProperty() {
-		width.bind(bar1.widthProperty());
-	}
-
-	public void setColors(double value1, double value2) {
-		bar1.setFill(subLinearGradient(0, 360));
-	}
-
+	
+	/*****************************************************************/
+	/* The following functions need to be implemented according
+	 * to the desired slider behavior.
+	 */
+	protected abstract void initBars();
+	
+	protected abstract void layoutBars(double width);
+	
+	protected abstract void initBarWidthProperty();
+	
+	protected abstract void setColors(double value1, double value2);
+	/*****************************************************************/
+	
 	protected LinearGradient subLinearGradient(double begin, double end) {
 		int pointsNumber = 50;
 		Stop[] stops = new Stop[pointsNumber];
@@ -98,4 +76,5 @@ public class Bar {
 		}
 		return new LinearGradient(0, 0, 1, 0, true, CycleMethod.NO_CYCLE, stops);
 	}
+
 }

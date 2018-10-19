@@ -2,7 +2,7 @@ package controls.rangeSlider;
 
 import controls.Cursor;
 import controls.SliderSkin;
-import controls.simpleSlider.Bar;
+import controls.simpleSlider.SimpleBar;
 import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.geometry.VPos;
@@ -144,14 +144,14 @@ public class RangeSliderSkin extends SliderSkin {
 	@Override
 	protected void layoutBars() {
 		layoutInArea(((RangeBar) bar).getBar1(), ((RangeBar) bar).getBar1().getLayoutX(),
-				verticalPadding + Bar.barHeight, ((RangeBar) bar).getBar1().getWidth(),
-				Bar.barHeight + 2 * verticalPadding, 0, HPos.LEFT, VPos.TOP);
+				verticalPadding + SimpleBar.barHeight, ((RangeBar) bar).getBar1().getWidth(),
+				SimpleBar.barHeight + 2 * verticalPadding, 0, HPos.LEFT, VPos.TOP);
 		layoutInArea(((RangeBar) bar).getBarMid(), ((RangeBar) bar).getBarMid().getLayoutX(),
-				verticalPadding + Bar.barHeight, ((RangeBar) bar).getBarMid().getWidth(),
-				Bar.barHeight + 2 * verticalPadding, 0, HPos.LEFT, VPos.TOP);
+				verticalPadding + SimpleBar.barHeight, ((RangeBar) bar).getBarMid().getWidth(),
+				SimpleBar.barHeight + 2 * verticalPadding, 0, HPos.LEFT, VPos.TOP);
 		layoutInArea(((RangeBar) bar).getBar2(), ((RangeBar) bar).getBar2().getLayoutX(),
-				verticalPadding + Bar.barHeight, ((RangeBar) bar).getBar2().getWidth(),
-				Bar.barHeight + 2 * verticalPadding, 0, HPos.LEFT, VPos.TOP);
+				verticalPadding + SimpleBar.barHeight, ((RangeBar) bar).getBar2().getWidth(),
+				SimpleBar.barHeight + 2 * verticalPadding, 0, HPos.LEFT, VPos.TOP);
 	}
 
 	@Override

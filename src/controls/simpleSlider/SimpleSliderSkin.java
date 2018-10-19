@@ -2,7 +2,7 @@ package controls.simpleSlider;
 
 import controls.Cursor;
 import controls.SliderSkin;
-import controls.simpleSlider.Bar;
+import controls.simpleSlider.SimpleBar;
 import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.geometry.VPos;
@@ -18,7 +18,7 @@ public class SimpleSliderSkin extends SliderSkin {
 
 	@Override
 	protected void initBar() {
-		bar = new Bar(slider);
+		bar = new SimpleBar(slider);
 
 		bar.widthProperty().addListener(barWidthListener());
 
@@ -81,8 +81,8 @@ public class SimpleSliderSkin extends SliderSkin {
 	
 	@Override
 	protected void layoutBars() {
-		layoutInArea(bar.getBar1(), bar.getBar1().getLayoutX(), verticalPadding + Bar.barHeight,
-				bar.getBar1().getWidth(), Bar.barHeight + 2 * verticalPadding, 0, HPos.LEFT, VPos.TOP);
+		layoutInArea(bar.getBar1(), bar.getBar1().getLayoutX(), verticalPadding + SimpleBar.barHeight,
+				bar.getBar1().getWidth(), SimpleBar.barHeight + 2 * verticalPadding, 0, HPos.LEFT, VPos.TOP);
 	}
 	
 	@Override

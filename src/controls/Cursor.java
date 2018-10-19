@@ -1,11 +1,9 @@
 package controls;
 
 import controls.rangeSlider.RangeSlider;
-import controls.simpleSlider.SimpleSlider;
 import controls.simpleSlider.SimpleSliderSkin;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 
 public class Cursor extends Polygon {
@@ -16,13 +14,12 @@ public class Cursor extends Polygon {
 
 	public static final double cursorSize = 16;
 	private double barStrokeWidth;
-	private Color cursorColor = Color.WHITE;
 	private CursorType cursorType;
 
 	private double dragOriginLayout;
-	private SimpleSlider slider;
+	private Slider slider;
 
-	public Cursor(CursorType cursorType, SimpleSlider slider, double barStrokeWidth) {
+	public Cursor(CursorType cursorType, Slider slider, double barStrokeWidth) {
 		super();
 		this.cursorType = cursorType;
 		this.slider = slider;

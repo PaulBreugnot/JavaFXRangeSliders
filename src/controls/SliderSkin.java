@@ -1,19 +1,18 @@
 package controls;
 
-import controls.simpleSlider.Bar;
-import controls.simpleSlider.SimpleSlider;
+import controls.simpleSlider.SimpleBar;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.control.SkinBase;
 import javafx.scene.input.MouseEvent;
 
-public abstract class SliderSkin extends SkinBase<SimpleSlider> {
+public abstract class SliderSkin extends SkinBase<Slider> {
 	// Component layout parameters
 	public static final double horizontalPadding = 5;
 	public static final double verticalPadding = 0;
 
 	// Main Component
-	protected SimpleSlider slider;
+	protected Slider slider;
 
 	// Graphic Items
 	// private Rectangle bar;
@@ -24,7 +23,7 @@ public abstract class SliderSkin extends SkinBase<SimpleSlider> {
 	protected double cursorDragOrigin;
 	protected boolean reinitializeDrag;
 
-	protected SliderSkin(SimpleSlider slider) {
+	protected SliderSkin(Slider slider) {
 		super(slider);
 		this.slider = slider;
 		initGraphics();
@@ -76,7 +75,7 @@ public abstract class SliderSkin extends SkinBase<SimpleSlider> {
 	
 	protected double cursorYPos() {
 		// return bar.getY() + (Bar.barHeight - Cursor.cursorSize) / 2;
-		return bar.getY() + (Bar.barHeight - Cursor.cursorSize) / 2 - 1;
+		return bar.getY() + (SimpleBar.barHeight - Cursor.cursorSize) / 2 - 1;
 		// return bar.getY();
 	}
 	

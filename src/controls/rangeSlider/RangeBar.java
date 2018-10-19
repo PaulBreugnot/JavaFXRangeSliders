@@ -1,20 +1,15 @@
 package controls.rangeSlider;
 
+import controls.Bar;
 import controls.Cursor;
-import controls.simpleSlider.Bar;
 import controls.simpleSlider.SimpleSliderSkin;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.CycleMethod;
-import javafx.scene.paint.LinearGradient;
-import javafx.scene.paint.Paint;
-import javafx.scene.paint.Stop;
 import javafx.scene.shape.Rectangle;
 
 public class RangeBar extends Bar {
@@ -68,11 +63,6 @@ public class RangeBar extends Bar {
 			bar2.setLayoutX(barMid.getLayoutX() + barMid.getWidth());
 
 		}
-	}
-
-	@Override
-	public void setWidth(double width) {
-		layoutBars(width);
 	}
 
 	public Rectangle getBarMid() {
@@ -162,15 +152,6 @@ public class RangeBar extends Bar {
 			}
 		});
 	}
-
-//	public ChangeListener<Number> colorSetterForValue1 () {
-//		return new ChangeListener<Number>() {
-//			@Override
-//			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-//				layoutBars((double) newValue, rangeSlider.getValue2(), width.get());
-//			}
-//		};
-//	}
 
 	public void linkColorListeners() {
 		((RangeSlider) slider).value1Property().addListener(new ChangeListener<Number>() {
