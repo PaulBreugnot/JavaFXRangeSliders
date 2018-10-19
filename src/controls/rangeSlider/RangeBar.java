@@ -2,7 +2,7 @@ package controls.rangeSlider;
 
 import controls.Cursor;
 import controls.simpleSlider.Bar;
-import controls.simpleSlider.SliderSkin;
+import controls.simpleSlider.SimpleSliderSkin;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleDoubleProperty;
@@ -43,7 +43,7 @@ public class RangeBar extends Bar {
 			double bar1Distance = (value1 - rangeSlider.getMinValue()) * width
 					/ (rangeSlider.getMaxValue() - rangeSlider.getMinValue());
 			bar1.setWidth(bar1Distance);
-			bar1.setLayoutX(SliderSkin.horizontalPadding + Cursor.cursorSize);
+			bar1.setLayoutX(SimpleSliderSkin.horizontalPadding + Cursor.cursorSize);
 
 			barMid.setWidth(((value2 - value1) - rangeSlider.getMinValue()) * width
 					/ (rangeSlider.getMaxValue() - rangeSlider.getMinValue()));
@@ -57,7 +57,7 @@ public class RangeBar extends Bar {
 		} else {
 			bar1.setWidth((value2 - rangeSlider.getMinValue()) * width
 					/ (rangeSlider.getMaxValue() - rangeSlider.getMinValue()));
-			bar1.setLayoutX(SliderSkin.horizontalPadding + Cursor.cursorSize);
+			bar1.setLayoutX(SimpleSliderSkin.horizontalPadding + Cursor.cursorSize);
 
 			barMid.setWidth(((value1 - value2) - rangeSlider.getMinValue()) * width
 					/ (rangeSlider.getMaxValue() - rangeSlider.getMinValue()));
@@ -91,7 +91,7 @@ public class RangeBar extends Bar {
 		bar1.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			public void handle(MouseEvent event) {
 				((RangeSliderSkin) slider.getSliderSkin()).getMinCursor()
-						.updateValue(event.getX() + SliderSkin.horizontalPadding, width.get());
+						.updateValue(event.getX() + SimpleSliderSkin.horizontalPadding, width.get());
 			}
 		});
 
@@ -102,10 +102,10 @@ public class RangeBar extends Bar {
 			public void handle(MouseEvent event) {
 				if (event.getX() < barMid.getWidth() / 2) {
 					((RangeSliderSkin) slider.getSliderSkin()).getMinCursor().updateValue(
-							event.getX() + bar1.getWidth() + SliderSkin.horizontalPadding, width.get());
+							event.getX() + bar1.getWidth() + SimpleSliderSkin.horizontalPadding, width.get());
 				} else {
 					((RangeSliderSkin) slider.getSliderSkin()).getMaxCursor().updateValue(
-							bar1.getWidth() + event.getX() + SliderSkin.horizontalPadding + Cursor.cursorSize,
+							bar1.getWidth() + event.getX() + SimpleSliderSkin.horizontalPadding + Cursor.cursorSize,
 							width.get());
 				}
 			}
@@ -117,7 +117,7 @@ public class RangeBar extends Bar {
 		bar2.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			public void handle(MouseEvent event) {
 				((RangeSliderSkin) slider.getSliderSkin()).getMaxCursor().updateValue(bar1.getWidth()
-						+ barMid.getWidth() + event.getX() + SliderSkin.horizontalPadding + Cursor.cursorSize,
+						+ barMid.getWidth() + event.getX() + SimpleSliderSkin.horizontalPadding + Cursor.cursorSize,
 						width.get());
 			}
 		});

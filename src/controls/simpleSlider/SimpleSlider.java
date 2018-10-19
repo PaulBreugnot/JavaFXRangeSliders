@@ -16,7 +16,7 @@ public class SimpleSlider extends Slider {
 
 	@Override
 	protected Skin<?> createDefaultSkin() {
-		sliderSkin = new SliderSkin(this);
+		sliderSkin = new SimpleSliderSkin(this);
 		return sliderSkin;
 	}
 }

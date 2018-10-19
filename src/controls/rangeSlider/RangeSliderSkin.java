@@ -1,14 +1,11 @@
 package controls.rangeSlider;
 
 import controls.Cursor;
+import controls.SliderSkin;
 import controls.simpleSlider.Bar;
-import controls.simpleSlider.SliderSkin;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.geometry.VPos;
-import javafx.scene.control.SkinBase;
 import javafx.scene.input.MouseEvent;
 
 public class RangeSliderSkin extends SliderSkin {
@@ -32,7 +29,6 @@ public class RangeSliderSkin extends SliderSkin {
 
 	@Override
 	protected void initCursors() {
-		// Can be override to personalize cursors
 		initMinCursor();
 		initMaxCursor();
 		initMidCursor();
@@ -40,7 +36,6 @@ public class RangeSliderSkin extends SliderSkin {
 
 	@Override
 	protected void updateCursorsPositions() {
-		// To override according to used cursors
 		updateCursorXPos(minCursor, ((RangeSlider) slider).getValue1());
 		updateCursorXPos(maxCursor, ((RangeSlider) slider).getValue2());
 		updateCursorXPos(midCursor, ((RangeSlider) slider).getValueMid());
@@ -49,34 +44,12 @@ public class RangeSliderSkin extends SliderSkin {
 	@Override
 	protected void initBar() {
 		bar = new RangeBar((RangeSlider) slider);
-
-//
-//		bar.setOnMouseDragged(new EventHandler<MouseEvent>() {
-//			public void handle(MouseEvent event) {
-//				// event.getX() = coordinate in the bar coordinate system
-//				updateValue(midCursor, event.getX());
-//			}
-//		});
-//
 		bar.widthProperty().addListener(barWidthListener());
 
 		getChildren().add(((RangeBar) bar).getBar1());
 		getChildren().add(((RangeBar) bar).getBarMid());
 		getChildren().add(((RangeBar) bar).getBar2());
 
-	}
-
-	protected ChangeListener<Number> barWidthListener() {
-		return new ChangeListener<Number>() {
-			// If the bar width changes, cursors positions are adjusted
-			@Override
-			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-				// System.out.println("new bar width : " + (double) newValue);
-				updateCursorXPos(minCursor, ((RangeSlider) slider).getValue1());
-				updateCursorXPos(maxCursor, ((RangeSlider) slider).getValue2());
-				updateCursorXPos(midCursor, ((RangeSlider) slider).getValueMid());
-			}
-		};
 	}
 
 	private void initMinCursor() {

@@ -36,7 +36,7 @@ public class Bar {
 
 	protected void layoutBars(double width) {
 		bar1.setWidth(width);
-		bar1.setLayoutX(SliderSkin.horizontalPadding + Cursor.cursorSize);
+		bar1.setLayoutX(SimpleSliderSkin.horizontalPadding + Cursor.cursorSize);
 	}
 
 	public void setWidth(double width) {
@@ -48,7 +48,7 @@ public class Bar {
 	}
 
 	public double getX() {
-		return bar1.getLayoutX() - (SliderSkin.horizontalPadding + Cursor.cursorSize);
+		return bar1.getLayoutX() - (SimpleSliderSkin.horizontalPadding + Cursor.cursorSize);
 	}
 
 	public double getY() {
@@ -73,8 +73,8 @@ public class Bar {
 		bar1.setId("bar");
 		bar1.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			public void handle(MouseEvent event) {
-				((SliderSkin) slider.getSliderSkin()).getMidCursor()
-						.updateValue(event.getX() + SliderSkin.horizontalPadding + Cursor.cursorSize / 2, width.get());
+				((SimpleSliderSkin) slider.getSliderSkin()).getMidCursor()
+						.updateValue(event.getX() + SimpleSliderSkin.horizontalPadding + Cursor.cursorSize / 2, width.get());
 			}
 		});
 

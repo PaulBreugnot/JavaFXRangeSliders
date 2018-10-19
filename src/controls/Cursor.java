@@ -2,7 +2,7 @@ package controls;
 
 import controls.rangeSlider.RangeSlider;
 import controls.simpleSlider.SimpleSlider;
-import controls.simpleSlider.SliderSkin;
+import controls.simpleSlider.SimpleSliderSkin;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
@@ -101,7 +101,7 @@ public class Cursor extends Polygon {
 	public void updateValue(Double newPos, Double barWidth) {
 		// Compute the range slider value according to newPos, that represents the
 		// cursor X coordinate in the bar coordinate system.
-		double value = slider.getMinValue() + (newPos - (SliderSkin.horizontalPadding + getOffset()))
+		double value = slider.getMinValue() + (newPos - (SimpleSliderSkin.horizontalPadding + getOffset()))
 				* (slider.getMaxValue() - slider.getMinValue()) / barWidth;
 
 		if (value < slider.getMinValue()) {
