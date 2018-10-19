@@ -1,6 +1,6 @@
-package controls.simpleSlider;
+package controls;
 
-import controls.rangeSlider.RangeSliderSkin;
+import controls.simpleSlider.SliderSkin;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -8,8 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Control;
 import javafx.scene.control.Skin;
 
-public class Slider extends Control {
-
+public abstract class Slider extends Control {
 	protected SliderSkin sliderSkin;
 
 	public static enum Mode {
@@ -84,12 +83,10 @@ public class Slider extends Control {
 	public Mode getMode() {
 		return mode;
 	}
+	
 
 	@Override
-	protected Skin<?> createDefaultSkin() {
-		sliderSkin = new SliderSkin(this);
-		return sliderSkin;
-	}
+	protected abstract Skin<?> createDefaultSkin();
 
 	public SliderSkin getSliderSkin() {
 		return sliderSkin;

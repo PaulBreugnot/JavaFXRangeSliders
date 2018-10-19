@@ -11,14 +11,14 @@ import javafx.geometry.VPos;
 import javafx.scene.control.SkinBase;
 import javafx.scene.input.MouseEvent;
 
-public class SliderSkin extends SkinBase<Slider> {
+public class SliderSkin extends SkinBase<SimpleSlider> {
 
 	// Component layout parameters
 	public static final double horizontalPadding = 5;
 	public static final double verticalPadding = 0;
 
 	// Main Component
-	protected Slider slider;
+	protected SimpleSlider slider;
 
 	// Graphic Items
 	// private Rectangle bar;
@@ -29,7 +29,7 @@ public class SliderSkin extends SkinBase<Slider> {
 	protected double cursorDragOrigin;
 	protected boolean reinitializeDrag;
 
-	protected SliderSkin(Slider slider) {
+	protected SliderSkin(SimpleSlider slider) {
 		super(slider);
 		this.slider = slider;
 		initGraphics();

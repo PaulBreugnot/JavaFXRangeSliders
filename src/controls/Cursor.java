@@ -1,7 +1,7 @@
 package controls;
 
 import controls.rangeSlider.RangeSlider;
-import controls.simpleSlider.Slider;
+import controls.simpleSlider.SimpleSlider;
 import controls.simpleSlider.SliderSkin;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
@@ -20,9 +20,9 @@ public class Cursor extends Polygon {
 	private CursorType cursorType;
 
 	private double dragOriginLayout;
-	private Slider slider;
+	private SimpleSlider slider;
 
-	public Cursor(CursorType cursorType, Slider slider, double barStrokeWidth) {
+	public Cursor(CursorType cursorType, SimpleSlider slider, double barStrokeWidth) {
 		super();
 		this.cursorType = cursorType;
 		this.slider = slider;

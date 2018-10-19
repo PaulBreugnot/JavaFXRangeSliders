@@ -2,7 +2,7 @@ package test;
 
 import controls.rangeSlider.RangeSlider;
 import controls.rangeSlider.colorRangeSlider.ColorRangeSlider;
-import controls.simpleSlider.Slider;
+import controls.simpleSlider.SimpleSlider;
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -22,7 +22,7 @@ public class TestApp extends Application {
         control2.getStylesheets().clear();
         control2.getStylesheets().add("style/test.css");
         // Control control3 = new ColorRangeSlider(100, 150);
-        Control control4 = new Slider(0, 10, 5, RangeSlider.Mode.LINEAR);
+        Control control4 = new SimpleSlider(0, 10, 5, RangeSlider.Mode.LINEAR);
         root.getChildren().add(control1);
         root.getChildren().add(control2);
         // root.getChildren().add(control3);

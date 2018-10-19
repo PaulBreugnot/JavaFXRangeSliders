@@ -1,12 +1,12 @@
 package controls.rangeSlider;
 
-import controls.simpleSlider.Slider;
+import controls.simpleSlider.SimpleSlider;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.control.Skin;
 
-public class RangeSlider extends Slider {
+public class RangeSlider extends SimpleSlider {
 
 	private SimpleDoubleProperty value1;
 	private SimpleDoubleProperty value2;

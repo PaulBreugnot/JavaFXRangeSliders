@@ -24,11 +24,11 @@ public class Bar {
 	protected Rectangle bar1;
 
 	// RangeSlider
-	protected Slider slider;
+	protected SimpleSlider slider;
 
 	protected SimpleDoubleProperty width = new SimpleDoubleProperty();
 
-	public Bar(Slider slider) {
+	public Bar(SimpleSlider slider) {
 		this.slider = slider;
 		initBars();
 		initBarWidthProperty();
