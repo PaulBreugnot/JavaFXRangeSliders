@@ -1,8 +1,8 @@
 package test;
 
-import colorSlider.simpleColorSlider.SimpleColorSlider;
+import controls.colorSlider.colorRangeSlider.RangeColorSlider;
+import controls.colorSlider.simpleColorSlider.SimpleColorSlider;
 import controls.rangeSlider.RangeSlider;
-import controls.rangeSlider.colorRangeSlider.ColorRangeSlider;
 import controls.simpleSlider.SimpleSlider;
 import javafx.application.Application;
 import javafx.geometry.Pos;
@@ -24,10 +24,12 @@ public class TestApp extends Application {
         control2.getStylesheets().add("style/test.css");
         Control control3 = new SimpleColorSlider(100);
         Control control4 = new SimpleSlider(0, 10, 10, RangeSlider.Mode.CYCLIC);
+        Control control5 = new RangeColorSlider(40, 160);
         root.getChildren().add(control1);
         root.getChildren().add(control2);
         root.getChildren().add(control3);
         root.getChildren().add(control4);
+        root.getChildren().add(control5);
         // VBox.setVgrow(control, Priority.ALWAYS);
         Scene scene = new Scene(root, 320, 200);
         primaryStage.setScene(scene);

@@ -1,6 +1,6 @@
-package colorSlider.simpleColorSlider;
+package controls.colorSlider.simpleColorSlider;
 
-import colorSlider.ColorBar;
+import controls.colorSlider.ColorBar;
 import controls.simpleSlider.SimpleSlider;
 import controls.simpleSlider.SimpleSliderSkin;
 import javafx.scene.paint.Color;

@@ -33,7 +33,7 @@ public class RangeSlider extends SimpleSlider {
 		this.value2.addListener(new ChangeListener<Number>() {
 			@Override
 			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-				System.out.println("Value 2 : " + newValue);
+				// System.out.println("Value 2 : " + newValue);
 				sliderSkin.updateCursorXPos(((RangeSliderSkin) sliderSkin).getMaxCursor(), (double) newValue);
 			}
 		});

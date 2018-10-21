@@ -100,7 +100,6 @@ public class Cursor extends Polygon {
 		// cursor X coordinate in the bar coordinate system.
 		double value = slider.getMinValue() + (newPos - (SimpleSliderSkin.horizontalPadding + getOffset()))
 				* (slider.getMaxValue() - slider.getMinValue()) / barWidth;
-		System.out.println("Computed value : " + value);
 
 		if (value < slider.getMinValue()) {
 			switch (slider.getMode()) {

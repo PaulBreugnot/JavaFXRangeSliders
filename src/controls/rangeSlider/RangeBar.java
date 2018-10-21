@@ -17,11 +17,11 @@ public class RangeBar extends Bar {
 	public static final double barHeight = 10;
 
 	// Components
-	private Rectangle barMid;
-	private Rectangle bar2;
+	protected Rectangle barMid;
+	protected Rectangle bar2;
 
 	// Colors
-	private SimpleBooleanProperty internSelected = new SimpleBooleanProperty();
+	protected SimpleBooleanProperty internSelected = new SimpleBooleanProperty();
 
 	public RangeBar(RangeSlider rangeSlider) {
 		super(rangeSlider);
@@ -71,6 +71,10 @@ public class RangeBar extends Bar {
 
 	public Rectangle getBar2() {
 		return bar2;
+	}
+	
+	public boolean isInternSelected() {
+		return internSelected.get();
 	}
 
 	@Override
@@ -152,47 +156,4 @@ public class RangeBar extends Bar {
 			}
 		});
 	}
-
-//	public void linkColorListeners() {
-//		((RangeSlider) slider).value1Property().addListener(new ChangeListener<Number>() {
-//			@Override
-//			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-//				setColors((double) newValue, ((RangeSlider) slider).getValue2());
-//			}
-//		});
-//
-//		((RangeSlider) slider).value2Property().addListener(new ChangeListener<Number>() {
-//			@Override
-//			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-//				setColors(((RangeSlider) slider).getValue1(), (double) newValue);
-//			}
-//		});
-//	}
-
-//	@Override
-//	public void setColors(double value1, double value2) {
-//		internSelected.set(value1 <= value2);
-//		if (internSelected.get()) {
-//			bar1.setFill(subLinearGradient(0, value1));
-//			((RangeSlider) slider).getRangeSliderSkin().getMinCursor().setFill(Color.hsb(value1, 1, 1));
-//
-//			barMid.setFill(subLinearGradient(value1, value2));
-//			((RangeSlider) slider).getRangeSliderSkin().getMidCursor().setFill(Color.hsb((value2 + value1) / 2, 1, 1));
-//
-//			bar2.setFill(subLinearGradient(value2, 360));
-//			((RangeSlider) slider).getRangeSliderSkin().getMaxCursor().setFill(Color.hsb(value2, 1, 1));
-//
-//		} else {
-//			bar1.setFill(subLinearGradient(0, value2));
-//			((RangeSlider) slider).getRangeSliderSkin().getMinCursor().setFill(Color.hsb(value1, 1, 1));
-//
-//			barMid.setFill(subLinearGradient(value2, value1));
-//			((RangeSlider) slider).getRangeSliderSkin().getMidCursor()
-//					.setFill(Color.hsb(((RangeSlider) slider).getValueMid(), 1, 1));
-//
-//			bar2.setFill(subLinearGradient(value1, 360));
-//			((RangeSlider) slider).getRangeSliderSkin().getMaxCursor().setFill(Color.hsb(value2, 1, 1));
-//
-//		}
-//	}
 }

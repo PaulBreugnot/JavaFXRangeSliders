@@ -1,4 +1,4 @@
-package colorSlider;
+package controls.colorSlider;
 
 public interface ColorBar {
 

@@ -1,6 +1,5 @@
-package colorSlider.simpleColorSlider;
+package controls.colorSlider.simpleColorSlider;
 
-import colorSlider.ColorBar;
 import controls.Slider;
 import controls.simpleSlider.SimpleSlider;
 import javafx.scene.control.Skin;
@@ -16,7 +15,6 @@ public class SimpleColorSlider extends SimpleSlider {
 	@Override
 	protected Skin<?> createDefaultSkin() {
 		sliderSkin = new SimpleColorSliderSkin(this);
-		((ColorBar) sliderSkin.getBar()).setColors(minValue, maxValue);
 		return sliderSkin;
 	}
 

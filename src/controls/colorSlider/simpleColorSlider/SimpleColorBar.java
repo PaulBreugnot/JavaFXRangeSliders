@@ -1,7 +1,7 @@
-package colorSlider.simpleColorSlider;
+package controls.colorSlider.simpleColorSlider;
 
-import colorSlider.ColorBar;
 import controls.Slider;
+import controls.colorSlider.ColorBar;
 import controls.simpleSlider.SimpleBar;
 import controls.simpleSlider.SimpleSlider;
 import javafx.beans.value.ChangeListener;
