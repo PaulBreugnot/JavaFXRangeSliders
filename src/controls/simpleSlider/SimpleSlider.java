@@ -4,7 +4,7 @@ import controls.Slider;
 import javafx.scene.control.Skin;
 
 public class SimpleSlider extends Slider {
-
+	
 	public SimpleSlider(double minValue, double maxValue, double value) {
 		super(minValue, maxValue, value);
 		getStylesheets().add("style/default-slider.css");

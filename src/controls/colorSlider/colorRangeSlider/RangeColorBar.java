@@ -1,6 +1,7 @@
 package controls.colorSlider.colorRangeSlider;
 
 import controls.colorSlider.ColorBar;
+import controls.colorSlider.ColorSlider;
 import controls.rangeSlider.RangeBar;
 import controls.rangeSlider.RangeSlider;
 import javafx.beans.value.ChangeListener;
@@ -17,21 +18,21 @@ public class RangeColorBar extends RangeBar implements ColorBar {
 	public void setColors(double value1, double value2) {
 		internSelected.set(value1 <= value2);
 		if (internSelected.get()) {
-			bar1.setFill(subLinearGradient(0, value1));
+			bar1.setFill(ColorBar.subLinearGradient(0, value1, (ColorSlider) slider));
 
-			barMid.setFill(subLinearGradient(value1, value2));
+			barMid.setFill(ColorBar.subLinearGradient(value1, value2, (ColorSlider) slider));
 
-			bar2.setFill(subLinearGradient(value2, 360));
+			bar2.setFill(ColorBar.subLinearGradient(value2, 360, (ColorSlider) slider));
 
 		} else {
-			bar1.setFill(subLinearGradient(0, value2));
+			bar1.setFill(ColorBar.subLinearGradient(0, value2, (ColorSlider) slider));
 			((RangeSlider) slider).getRangeSliderSkin().getMinCursor().setFill(Color.hsb(value1, 1, 1));
 
-			barMid.setFill(subLinearGradient(value2, value1));
+			barMid.setFill(ColorBar.subLinearGradient(value2, value1, (ColorSlider) slider));
 			((RangeSlider) slider).getRangeSliderSkin().getMidCursor()
 					.setFill(Color.hsb(((RangeSlider) slider).getValueMid(), 1, 1));
 
-			bar2.setFill(subLinearGradient(value1, 360));
+			bar2.setFill(ColorBar.subLinearGradient(value1, 360, (ColorSlider) slider));
 			((RangeSlider) slider).getRangeSliderSkin().getMaxCursor().setFill(Color.hsb(value2, 1, 1));
 
 		}

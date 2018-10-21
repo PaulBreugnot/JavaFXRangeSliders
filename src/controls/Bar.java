@@ -66,15 +66,4 @@ public abstract class Bar {
 	
 	// public abstract void setColors(double value1, double value2);
 	/*****************************************************************/
-	
-	protected LinearGradient subLinearGradient(double begin, double end) {
-		int pointsNumber = 50;
-		Stop[] stops = new Stop[pointsNumber];
-		for (int i = 0; i < pointsNumber; i++) {
-			double index = (double) i / (pointsNumber - 1);
-			stops[i] = new Stop(index, Color.hsb(begin + index * (end - begin), 1, 1));
-		}
-		return new LinearGradient(0, 0, 1, 0, true, CycleMethod.NO_CYCLE, stops);
-	}
-
 }

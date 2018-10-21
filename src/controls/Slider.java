@@ -20,6 +20,10 @@ public abstract class Slider extends Control {
 	protected double maxValue;
 	protected SimpleDoubleProperty valueMid;
 
+	public Slider() {
+		
+	}
+	
 	public Slider(double minValue, double maxValue, double value, Mode mode) {
 		this(minValue, maxValue, value);
 		this.mode = mode;

@@ -1,15 +1,61 @@
 package controls.colorSlider.simpleColorSlider;
 
 import controls.Slider;
+import controls.colorSlider.ColorConfig;
+import controls.colorSlider.ColorSelectionMode;
+import controls.colorSlider.ColorSlider;
 import controls.simpleSlider.SimpleSlider;
 import javafx.scene.control.Skin;
 
-public class SimpleColorSlider extends SimpleSlider {
+public class SimpleColorSlider extends SimpleSlider implements ColorSlider {
 
-	public SimpleColorSlider(double value) {
-		super(0, 360, value, Slider.Mode.CYCLIC);
+	protected ColorSelectionMode colorSelectionMode;
+	
+	protected ColorConfig colorConfig;
+	
+	public SimpleColorSlider(double minValue, double maxValue, double value, Slider.Mode mode, ColorSelectionMode colorSelectionMode) {
+		super(minValue, maxValue, value, mode);
+		this.colorSelectionMode = colorSelectionMode;
 		getStylesheets().remove("style/default-slider.css");
 		getStylesheets().add("style/color-slider-style.css");
+		colorConfig = new ColorConfig();
+	}
+
+	public ColorSelectionMode getColorSelectionMode() {
+		return colorSelectionMode;
+	}
+
+	public void setColorSelectionMode(ColorSelectionMode colorSelectionMode) {
+		this.colorSelectionMode = colorSelectionMode;
+	}
+
+	public ColorConfig getColorConfig() {
+		return colorConfig;
+	}
+
+	public void setColorConfig(ColorConfig colorConfig) {
+		this.colorConfig = colorConfig;
+	}
+
+	public static SimpleColorSlider SimpleHueColorSlider(double value, double saturation, double brightness) {
+		SimpleColorSlider simpleColorSlider = new SimpleColorSlider(0, 360, value, Slider.Mode.CYCLIC, ColorSelectionMode.HUE);
+		simpleColorSlider.getColorConfig().setSaturation(saturation);
+		simpleColorSlider.getColorConfig().setBrightness(brightness);
+		return simpleColorSlider;
+	}
+	
+	public static SimpleColorSlider SimpleSaturationColorSlider(double value, double hue, double brightness) {
+		SimpleColorSlider simpleColorSlider = new SimpleColorSlider(0, 1, value, Slider.Mode.LINEAR, ColorSelectionMode.SATURATION);
+		simpleColorSlider.getColorConfig().setHue(hue);
+		simpleColorSlider.getColorConfig().setBrightness(brightness);
+		return simpleColorSlider;
+	}
+	
+	public static SimpleColorSlider SimpleBrightnessColorSlider(double value, double hue, double saturation) {
+		SimpleColorSlider simpleColorSlider = new SimpleColorSlider(0, 1, value, Slider.Mode.LINEAR, ColorSelectionMode.BRIGHTNESS);
+		simpleColorSlider.getColorConfig().setHue(hue);
+		simpleColorSlider.getColorConfig().setSaturation(saturation);
+		return simpleColorSlider;
 	}
 	
 	@Override

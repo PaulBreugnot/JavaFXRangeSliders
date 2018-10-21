@@ -1,5 +1,7 @@
 package test;
 
+import controls.Slider;
+import controls.colorSlider.ColorSelectionMode;
 import controls.colorSlider.colorRangeSlider.RangeColorSlider;
 import controls.colorSlider.simpleColorSlider.SimpleColorSlider;
 import controls.rangeSlider.RangeSlider;
@@ -18,20 +20,25 @@ public class TestApp extends Application {
         VBox root = new VBox();
         root.setAlignment(Pos.CENTER);
         root.setSpacing(20);
-        Control control1 = new RangeSlider(0, 10, 2, 5, RangeSlider.Mode.LINEAR);
-        Control control2 = new RangeSlider(0, 10, 2, 5, RangeSlider.Mode.CYCLIC);
-        control2.getStylesheets().clear();
-        control2.getStylesheets().add("style/test.css");
-        Control control3 = new SimpleColorSlider(100);
-        Control control4 = new SimpleSlider(0, 10, 10, RangeSlider.Mode.CYCLIC);
-        Control control5 = new RangeColorSlider(40, 160);
-        root.getChildren().add(control1);
-        root.getChildren().add(control2);
-        root.getChildren().add(control3);
-        root.getChildren().add(control4);
-        root.getChildren().add(control5);
+        // Control control1 = new RangeSlider(0, 10, 2, 5, RangeSlider.Mode.LINEAR);
+        // Control control2 = new RangeSlider(0, 10, 2, 5, RangeSlider.Mode.CYCLIC);
+        // control2.getStylesheets().clear();
+        // control2.getStylesheets().add("style/test.css");
+        // Control control3 = SimpleColorSlider.SimpleHueColorSlider(60, 1, 1);
+        // Control control3 = new SimpleColorSlider(0, 360, 60, Slider.Mode.CYCLIC, ColorSelectionMode.HUE);
+        // Control control4 = new SimpleSlider(0, 10, 10, RangeSlider.Mode.CYCLIC);
+        // Control control5 = new RangeColorSlider(40, 160);
+        Control control6 = SimpleColorSlider.SimpleSaturationColorSlider(0.5, 100, 0.8);
+        Control control7 = SimpleColorSlider.SimpleBrightnessColorSlider(0.5, 100, 0.5);
+        // root.getChildren().add(control1);
+        // root.getChildren().add(control2);
+        // root.getChildren().add(control3);
+        // root.getChildren().add(control4);
+        // root.getChildren().add(control5);
+        root.getChildren().add(control6);
+        root.getChildren().add(control7);
         // VBox.setVgrow(control, Priority.ALWAYS);
-        Scene scene = new Scene(root, 320, 200);
+        Scene scene = new Scene(root, 320, 600);
         primaryStage.setScene(scene);
         primaryStage.show();
     }
