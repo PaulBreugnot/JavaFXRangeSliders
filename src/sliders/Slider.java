@@ -1,4 +1,4 @@
-package controls;
+package sliders;
 
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.value.ChangeListener;

@@ -1,11 +1,11 @@
-package controls.simpleSlider;
+package sliders.simpleSlider;
 
-import controls.Bar;
-import controls.Cursor;
-import controls.Slider;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Rectangle;
+import sliders.Bar;
+import sliders.Cursor;
+import sliders.Slider;
 
 public class SimpleBar extends Bar {
 

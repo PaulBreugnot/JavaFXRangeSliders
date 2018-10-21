@@ -1,4 +1,4 @@
-package controls.colorSlider;
+package sliders.colorSlider;
 
 public interface ColorSlider {
 	

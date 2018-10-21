@@ -1,12 +1,12 @@
-package controls.rangeSlider;
+package sliders.rangeSlider;
 
-import controls.Cursor;
-import controls.SliderSkin;
-import controls.simpleSlider.SimpleBar;
+import sliders.simpleSlider.SimpleBar;
 import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.geometry.VPos;
 import javafx.scene.input.MouseEvent;
+import sliders.Cursor;
+import sliders.SliderSkin;
 
 public class RangeSliderSkin extends SliderSkin {
 

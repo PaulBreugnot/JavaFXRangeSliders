@@ -1,11 +1,11 @@
-package controls.colorSlider.simpleColorSlider;
+package sliders.colorSlider.simpleColorSlider;
 
-import controls.colorSlider.ColorBar;
-import controls.colorSlider.ColorSelectionMode;
-import controls.colorSlider.ColorSlider;
-import controls.simpleSlider.SimpleSlider;
-import controls.simpleSlider.SimpleSliderSkin;
+import sliders.simpleSlider.SimpleSlider;
+import sliders.simpleSlider.SimpleSliderSkin;
 import javafx.scene.paint.Color;
+import sliders.colorSlider.ColorBar;
+import sliders.colorSlider.ColorSelectionMode;
+import sliders.colorSlider.ColorSlider;
 
 public class SimpleColorSliderSkin extends SimpleSliderSkin {
 	

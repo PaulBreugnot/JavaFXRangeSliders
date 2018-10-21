@@ -1,15 +1,15 @@
-package controls.colorSlider.simpleColorSlider;
+package sliders.colorSlider.simpleColorSlider;
 
-import controls.Slider;
-import controls.colorSlider.ColorBar;
-import controls.colorSlider.ColorConfig;
-import controls.colorSlider.ColorSelectionMode;
-import controls.colorSlider.ColorSlider;
-import controls.simpleSlider.SimpleBar;
-import controls.simpleSlider.SimpleSlider;
+import sliders.simpleSlider.SimpleBar;
+import sliders.simpleSlider.SimpleSlider;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.paint.Color;
+import sliders.Slider;
+import sliders.colorSlider.ColorBar;
+import sliders.colorSlider.ColorConfig;
+import sliders.colorSlider.ColorSelectionMode;
+import sliders.colorSlider.ColorSlider;
 
 public class SimpleColorBar extends SimpleBar implements ColorBar {
 	

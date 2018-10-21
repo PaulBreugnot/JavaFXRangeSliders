@@ -1,6 +1,6 @@
-package controls.rangeSlider;
+package sliders.rangeSlider;
 
-import controls.simpleSlider.SimpleSlider;
+import sliders.simpleSlider.SimpleSlider;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;

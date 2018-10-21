@@ -1,12 +1,12 @@
-package controls.colorSlider.colorRangeSlider;
+package sliders.colorSlider.colorRangeSlider;
 
-import controls.Slider;
-import controls.colorSlider.ColorConfig;
-import controls.colorSlider.ColorSelectionMode;
-import controls.colorSlider.ColorSlider;
-import controls.colorSlider.simpleColorSlider.SimpleColorSlider;
-import controls.rangeSlider.RangeSlider;
+import sliders.colorSlider.simpleColorSlider.SimpleColorSlider;
+import sliders.rangeSlider.RangeSlider;
 import javafx.scene.control.Skin;
+import sliders.Slider;
+import sliders.colorSlider.ColorConfig;
+import sliders.colorSlider.ColorSelectionMode;
+import sliders.colorSlider.ColorSlider;
 
 public class RangeColorSlider extends RangeSlider implements ColorSlider {
 	

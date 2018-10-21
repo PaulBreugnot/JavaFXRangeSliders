@@ -1,11 +1,9 @@
 package test;
 
-import controls.Slider;
-import controls.colorSlider.ColorSelectionMode;
-import controls.colorSlider.colorRangeSlider.RangeColorSlider;
-import controls.colorSlider.simpleColorSlider.SimpleColorSlider;
-import controls.rangeSlider.RangeSlider;
-import controls.simpleSlider.SimpleSlider;
+import sliders.colorSlider.colorRangeSlider.RangeColorSlider;
+import sliders.colorSlider.simpleColorSlider.SimpleColorSlider;
+import sliders.rangeSlider.RangeSlider;
+import sliders.simpleSlider.SimpleSlider;
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -13,6 +11,8 @@ import javafx.scene.control.Control;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import sliders.Slider;
+import sliders.colorSlider.ColorSelectionMode;
 
 public class TestApp extends Application {
 	@Override

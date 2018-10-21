@@ -1,8 +1,6 @@
-package controls.rangeSlider;
+package sliders.rangeSlider;
 
-import controls.Bar;
-import controls.Cursor;
-import controls.simpleSlider.SimpleSliderSkin;
+import sliders.simpleSlider.SimpleSliderSkin;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.value.ChangeListener;
@@ -11,6 +9,8 @@ import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import sliders.Bar;
+import sliders.Cursor;
 
 public class RangeBar extends Bar {
 	// Layout parameters

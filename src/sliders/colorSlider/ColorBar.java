@@ -1,4 +1,4 @@
-package controls.colorSlider;
+package sliders.colorSlider;
 
 import javafx.scene.paint.Color;
 import javafx.scene.paint.CycleMethod;

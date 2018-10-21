@@ -1,4 +1,4 @@
-package controls.colorSlider;
+package sliders.colorSlider;
 
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.paint.Color;

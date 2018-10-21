@@ -1,12 +1,12 @@
-package controls.colorSlider.colorRangeSlider;
+package sliders.colorSlider.colorRangeSlider;
 
-import controls.colorSlider.ColorBar;
-import controls.colorSlider.ColorSlider;
-import controls.rangeSlider.RangeBar;
-import controls.rangeSlider.RangeSlider;
+import sliders.rangeSlider.RangeBar;
+import sliders.rangeSlider.RangeSlider;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.paint.Color;
+import sliders.colorSlider.ColorBar;
+import sliders.colorSlider.ColorSlider;
 
 public class RangeColorBar extends RangeBar implements ColorBar {
 

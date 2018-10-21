@@ -1,7 +1,7 @@
-package controls.simpleSlider;
+package sliders.simpleSlider;
 
-import controls.Slider;
 import javafx.scene.control.Skin;
+import sliders.Slider;
 
 public class SimpleSlider extends Slider {
 	

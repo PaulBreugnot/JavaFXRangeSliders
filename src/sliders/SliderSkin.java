@@ -1,6 +1,6 @@
-package controls;
+package sliders;
 
-import controls.simpleSlider.SimpleBar;
+import sliders.simpleSlider.SimpleBar;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.control.SkinBase;

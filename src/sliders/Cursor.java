@@ -1,7 +1,7 @@
-package controls;
+package sliders;
 
-import controls.rangeSlider.RangeSlider;
-import controls.simpleSlider.SimpleSliderSkin;
+import sliders.rangeSlider.RangeSlider;
+import sliders.simpleSlider.SimpleSliderSkin;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Polygon;

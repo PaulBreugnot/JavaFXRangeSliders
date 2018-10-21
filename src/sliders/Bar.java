@@ -1,6 +1,6 @@
-package controls;
+package sliders;
 
-import controls.simpleSlider.SimpleSliderSkin;
+import sliders.simpleSlider.SimpleSliderSkin;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.CycleMethod;
