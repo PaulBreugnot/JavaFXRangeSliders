@@ -13,11 +13,12 @@ public class SimpleColorSliderSkin extends SimpleSliderSkin {
 		super(slider);
 		((ColorBar) bar).linkColorListeners();
 		
-		midCursor.setFill(Color.hsb(slider.getValue(), 1, 1));
-		midCursor.setFill(SimpleColorBar.resolveCursorColor(
-				slider.getValue(),
-				((ColorSlider) slider).getColorSelectionMode(),
-				((ColorSlider) slider).getColorConfig()));
+//		midCursor.setFill(Color.hsb(slider.getValue(), 1, 1));
+//		midCursor.setFill(SimpleColorBar.resolveCursorColor(
+//				slider.getValue(),
+//				((ColorSlider) slider).getColorSelectionMode(),
+//				((ColorSlider) slider).getColorConfig()));
+		midCursor.setFill(((ColorSlider) slider).getColorConfig().getSelectedColor());
 	}
 	
 	@Override

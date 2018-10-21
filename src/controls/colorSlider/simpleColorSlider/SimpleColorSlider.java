@@ -41,6 +41,7 @@ public class SimpleColorSlider extends SimpleSlider implements ColorSlider {
 		SimpleColorSlider simpleColorSlider = new SimpleColorSlider(0, 360, value, Slider.Mode.CYCLIC, ColorSelectionMode.HUE);
 		simpleColorSlider.getColorConfig().setSaturation(saturation);
 		simpleColorSlider.getColorConfig().setBrightness(brightness);
+		simpleColorSlider.getColorConfig().hueProperty().bind(simpleColorSlider.valueProperty());
 		return simpleColorSlider;
 	}
 	
@@ -48,6 +49,7 @@ public class SimpleColorSlider extends SimpleSlider implements ColorSlider {
 		SimpleColorSlider simpleColorSlider = new SimpleColorSlider(0, 1, value, Slider.Mode.LINEAR, ColorSelectionMode.SATURATION);
 		simpleColorSlider.getColorConfig().setHue(hue);
 		simpleColorSlider.getColorConfig().setBrightness(brightness);
+		simpleColorSlider.getColorConfig().saturationProperty().bind(simpleColorSlider.valueProperty());
 		return simpleColorSlider;
 	}
 	
@@ -55,6 +57,7 @@ public class SimpleColorSlider extends SimpleSlider implements ColorSlider {
 		SimpleColorSlider simpleColorSlider = new SimpleColorSlider(0, 1, value, Slider.Mode.LINEAR, ColorSelectionMode.BRIGHTNESS);
 		simpleColorSlider.getColorConfig().setHue(hue);
 		simpleColorSlider.getColorConfig().setSaturation(saturation);
+		simpleColorSlider.getColorConfig().brightnessProperty().bind(simpleColorSlider.valueProperty());
 		return simpleColorSlider;
 	}
 	

@@ -28,28 +28,28 @@ public class SimpleColorBar extends SimpleBar implements ColorBar {
 		((SimpleSlider) slider).valueProperty().addListener(new ChangeListener<Number>() {
 			@Override
 			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-				((SimpleSlider) slider).getSliderSkin().getMidCursor().setFill(
-						resolveCursorColor(
-								(double) newValue,
-								((ColorSlider) slider).getColorSelectionMode(),
-								((ColorSlider) slider).getColorConfig()
-								));
+				((SimpleSlider) slider).getSliderSkin().getMidCursor().setFill(((ColorSlider) slider).getColorConfig().getSelectedColor());
+//						resolveCursorColor(
+//								(double) newValue,
+//								((ColorSlider) slider).getColorSelectionMode(),
+//								((ColorSlider) slider).getColorConfig()
+//								));
 			}
 		});
 		
 	}
 	
-	public static Color resolveCursorColor(double value, ColorSelectionMode colorSelectionMode, ColorConfig colorConfig) {
-		switch (colorSelectionMode) {
-		case HUE:
-			return Color.hsb(value, colorConfig.getSaturation(), colorConfig.getbrightness());
-		case SATURATION:
-			return Color.hsb(colorConfig.getHue(), value, colorConfig.getbrightness());
-		case BRIGHTNESS:
-			return Color.hsb(colorConfig.getHue(), colorConfig.getSaturation(), value);
-		default:
-			return null;
-		}
-	}
+//	public static Color resolveCursorColor(double value, ColorSelectionMode colorSelectionMode, ColorConfig colorConfig) {
+//		switch (colorSelectionMode) {
+//		case HUE:
+//			return Color.hsb(value, colorConfig.getSaturation(), colorConfig.getbrightness());
+//		case SATURATION:
+//			return Color.hsb(colorConfig.getHue(), value, colorConfig.getbrightness());
+//		case BRIGHTNESS:
+//			return Color.hsb(colorConfig.getHue(), colorConfig.getSaturation(), value);
+//		default:
+//			return null;
+//		}
+//	}
 
 }

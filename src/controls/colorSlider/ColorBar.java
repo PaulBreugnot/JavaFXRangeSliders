@@ -24,9 +24,9 @@ public interface ColorBar {
 	static Color ComputeColor(double index, double begin, double end, ColorSelectionMode colorSelectionMode, ColorConfig colorConfig) {
 		switch(colorSelectionMode) {
 			case HUE:
-				return Color.hsb(begin + index * (end - begin), colorConfig.getSaturation(), colorConfig.getbrightness());
+				return Color.hsb(begin + index * (end - begin), colorConfig.getSaturation(), colorConfig.getBrightness());
 			case SATURATION:
-				return Color.hsb(colorConfig.getHue(), begin + index * (end - begin), colorConfig.getbrightness());
+				return Color.hsb(colorConfig.getHue(), begin + index * (end - begin), colorConfig.getBrightness());
 			case BRIGHTNESS:
 				return Color.hsb(colorConfig.getHue(), colorConfig.getSaturation(), begin + index * (end - begin));
 			default:

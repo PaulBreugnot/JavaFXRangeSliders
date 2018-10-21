@@ -27,14 +27,15 @@ public class TestApp extends Application {
         // Control control3 = SimpleColorSlider.SimpleHueColorSlider(60, 1, 1);
         // Control control3 = new SimpleColorSlider(0, 360, 60, Slider.Mode.CYCLIC, ColorSelectionMode.HUE);
         // Control control4 = new SimpleSlider(0, 10, 10, RangeSlider.Mode.CYCLIC);
-        // Control control5 = new RangeColorSlider(40, 160);
+        // Control control5 = RangeColorSlider.RangeHueSlider(40, 160, 0.5, 0.5);
+        Control control5 = RangeColorSlider.RangeBrightnessSlider(0.2, 0.6, 100, 0.7);
         Control control6 = SimpleColorSlider.SimpleSaturationColorSlider(0.5, 100, 0.8);
         Control control7 = SimpleColorSlider.SimpleBrightnessColorSlider(0.5, 100, 0.5);
         // root.getChildren().add(control1);
         // root.getChildren().add(control2);
         // root.getChildren().add(control3);
         // root.getChildren().add(control4);
-        // root.getChildren().add(control5);
+        root.getChildren().add(control5);
         root.getChildren().add(control6);
         root.getChildren().add(control7);
         // VBox.setVgrow(control, Priority.ALWAYS);

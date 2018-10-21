@@ -1,6 +1,9 @@
 package controls.colorSlider.colorRangeSlider;
 
 import controls.colorSlider.ColorBar;
+import controls.colorSlider.ColorConfig;
+import controls.colorSlider.ColorSelectionMode;
+import controls.colorSlider.ColorSlider;
 import controls.rangeSlider.RangeBar;
 import controls.rangeSlider.RangeSlider;
 import controls.rangeSlider.RangeSliderSkin;
@@ -11,7 +14,13 @@ public class RangeColorSliderSkin extends RangeSliderSkin {
 	protected RangeColorSliderSkin(RangeSlider rangeSlider) {
 		super(rangeSlider);
 		((ColorBar) bar).linkColorListeners();
-		setCursorsColors(((RangeSlider) slider).getValue1(), ((RangeSlider) slider).getValue2());
+		setCursorsColors(
+				((RangeSlider) slider).getValue1(),
+				((RangeSlider) slider).getValue2(),
+				((ColorSlider) rangeSlider).getColorConfig(),
+				((ColorSlider) rangeSlider).getMinColorConfig(),
+				((ColorSlider) rangeSlider).getMaxColorConfig()
+				);
 	}
 
 	@Override
@@ -26,18 +35,9 @@ public class RangeColorSliderSkin extends RangeSliderSkin {
 		((ColorBar) bar).setColors(((RangeSlider) slider).getValue1(), ((RangeSlider) slider).getValue2());
 	}
 	
-	public void setCursorsColors(double value1, double value2) {
-		((RangeBar) bar).isInternSelected();
-		if (((RangeBar) bar).isInternSelected()) {
-			minCursor.setFill(Color.hsb(value1, 1, 1));
-			midCursor.setFill(Color.hsb((value2 + value1) / 2, 1, 1));
-			maxCursor.setFill(Color.hsb(value2, 1, 1));
-
-		} else {
-			minCursor.setFill(Color.hsb(value1, 1, 1));
-			midCursor.setFill(Color.hsb(((RangeSlider) slider).getValueMid(), 1, 1));
-			maxCursor.setFill(Color.hsb(value2, 1, 1));
-
-		}
+	public void setCursorsColors(double value1, double value2, ColorConfig colorConfig, ColorConfig minColorConfig, ColorConfig maxColorConfig) {
+		minCursor.setFill(minColorConfig.getSelectedColor());
+		midCursor.setFill(colorConfig.getSelectedColor());
+		maxCursor.setFill(maxColorConfig.getSelectedColor());
 	}
 }
